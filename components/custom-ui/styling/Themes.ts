@@ -169,6 +169,48 @@ const Themes = (app: APPS) => {
     };
   };
 
+  const training = () => {
+    const contentSection = {
+      padding: `w-full py-4 px-6`,
+      mobilePadding: `pb-16 pt-4 px-4`,
+    };
+
+    const textColor = {
+      default: `text-gray-600`,
+      primary: `text-[var(--training-primary)]`,
+      secondary: `text-[var(--training-highlight)]`,
+      highlight: `text-[var(--training-highlight)]`,
+    };
+
+    const button = {
+      default: `border border-[var(--training-primary)] bg-[var(--training-primary)] text-white hover:bg-[var(--training-primary-hover)] active:bg-[var(--training-active)]`,
+      destructive: `border border-destructive bg-destructive text-white hover:bg-destructive/90`,
+      outline: `bg-white border border-[var(--training-primary)] text-[var(--training-primary)] hover:bg-[var(--training-highlight)] hover:text-[var(--training-primary)] active:bg-[var(--training-third)] active:text-[var(--training-primary)]`,
+      secondary: `bg-[var(--training-highlight)] text-[var(--training-primary)] hover:bg-[var(--training-highlight)]/80`,
+      ghost: `hover:bg-[var(--training-highlight)] hover:text-[var(--training-primary)] active:bg-[var(--training-third)] active:text-[var(--training-primary)]`,
+      link: `text-[var(--training-primary)] underline-offset-4 hover:underline`,
+    };
+
+    const combobox = {
+      trigger: `text-[#374151] hover:bg-[var(--training-highlight)] hover:text-[var(--training-primary)]`,
+      triggerText: `font-normal text-gray-700 hover:text-[var(--training-primary)]`,
+    };
+
+    const dropdownMenu = {
+      content: `w-[220px] p-0 rounded-sm`,
+      item: `h-[37px] px-[16px] py-[8px] gap-[8px] rounded-none flex flex-row items-center gap-2 cursor-pointer focus:bg-[var(--training-highlight)] focus:text-[var(--training-primary)] data-[highlighted=true]:bg-[var(--training-highlight)] data-[highlighted=true]:text-[var(--training-primary)] hover:bg-[var(--training-highlight)] hover:text-[var(--training-primary)]`,
+      itemSelected: `bg-[var(--training-highlight)] text-[var(--training-primary)]`,
+    };
+
+    return {
+      contentSection,
+      button,
+      combobox,
+      dropdownMenu,
+      textColor,
+    };
+  };
+
   switch (app) {
     case APPS.PORTAL:
       return portal();
@@ -179,7 +221,7 @@ const Themes = (app: APPS) => {
       return forms();
     // --- END NEW CASE ---
     case APPS.TRAINING:
-      return portal();
+      return training();
     case APPS.INSPECTIONS:
       return inspections();
     case APPS.CONTRACTORS:

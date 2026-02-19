@@ -5,8 +5,6 @@ import type { Table as TanstackTable } from '@tanstack/react-table';
 import {
   ChevronLeft,
   ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
 } from 'lucide-react';
 import React from 'react';
 
@@ -68,34 +66,24 @@ export function TablePagination<TData>({
   const pageItems = getPageNumbers();
 
   return (
-    <div className="flex items-center justify-center space-x-2 py-4 text-sm">
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => table.setPageIndex(0)}
-        disabled={!table.getCanPreviousPage()}
-        aria-label="Go to first page"
-        className={theme.button.ghost}
-      >
-        <ChevronsLeft size={14} />
-      </Button>
+    <div className="flex items-center justify-center space-x-1 py-4 text-sm">
       <Button
         variant="ghost"
         size="sm"
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
         aria-label="Go to previous page"
-        className={theme.button.ghost}
+        className={cn(theme.button.ghost, 'gap-1')}
       >
-        <ChevronLeft size={14} className="mr-1" />
+        <ChevronLeft size={14} />
         Previous
       </Button>
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-0.5">
         {pageItems.map((pageNumber, idx) => {
           if (pageNumber === '...') {
             return (
-              <span key={`ellipsis-${idx}`} className="px-2">
+              <span key={`ellipsis-${idx}`} className="px-2 text-gray-400">
                 ...
               </span>
             );
@@ -130,20 +118,10 @@ export function TablePagination<TData>({
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
         aria-label="Go to next page"
-        className={theme.button.ghost}
+        className={cn(theme.button.ghost, 'gap-1')}
       >
         Next
-        <ChevronRight size={14} className="ml-1" />
-      </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-        disabled={!table.getCanNextPage()}
-        aria-label="Go to last page"
-        className={theme.button.ghost}
-      >
-        <ChevronsRight size={14} />
+        <ChevronRight size={14} />
       </Button>
     </div>
   );

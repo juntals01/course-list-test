@@ -315,9 +315,70 @@ function Glowing(app: APPS | null = null): string | GlowingThemeObject {
     badge: 'bg-[var(--inspections-primary)] rounded-sm text-white',
   };
 
+  const training: GlowingThemeObject = {
+    inputBox: `focus-within:border-[var(--training-primary)] 
+      focus-within:shadow-[0_0_8px_#FEB8364D]
+      focus-within:ring-0 
+      focus-within:ring-transparent 
+      placeholder:opacity-100 
+      focus-within:placeholder:opacity-0 
+      placeholder:transition-opacity 
+      placeholder:duration-300`,
+
+    checkbox: `focus-visible:border-[var(--training-primary)] 
+      focus-visible:shadow-[0_0_8px_#FEB8364D] 
+      focus-visible:ring-0 
+      focus-visible:ring-transparent 
+      focus:ring-0 
+      focus:ring-transparent 
+      placeholder:opacity-100 
+      focus:placeholder:opacity-0 
+      placeholder:transition-opacity 
+      placeholder:duration-300
+      [&:has([data-state=checked])]:!border-[var(--training-primary)] 
+      [&:has([data-state=checked])]:shadow-[0_0_8px_#FEB8364D] 
+      [&:has([data-state=checked])]:bg-[var(--training-primary)] 
+      [&:has([data-state=checked])]:text-[var(--training-primary)]               
+    `,
+    dropdown: `hover:border-[var(--training-primary)] 
+      hover:shadow-[0_0_8px_#FEB8364D] 
+      hover:bg-[var(--training-highlight)] 
+      hover:text-[var(--training-primary)] 
+      focus:border-[var(--training-primary)] 
+      focus:shadow-[0_0_8px_#FEB8364D] 
+      focus-visible:border-[var(--training-primary)] 
+      focus-visible:shadow-[0_0_8px_#FEB8364D] 
+      focus:ring-none 
+      focus:ring-transparent 
+      focus-visible:ring-none 
+      focus-visible:ring-transparent`,
+    dropdownItem: `
+      focus:bg-[var(--training-highlight)] 
+      focus:text-[var(--training-primary)]
+      data-[highlighted=true]:bg-[var(--training-highlight)]
+      data-[highlighted=true]:text-[var(--training-primary)]
+      hover:bg-[var(--training-highlight)]
+      hover:text-[var(--training-primary)]
+    `,
+    icon: `text-gray-700 hover:text-[var(--training-primary)] hover:bg-[var(--training-highlight)]`,
+    jsx: `[cmdk-item][data-highlighted=true] { 
+      background-color: var(--training-highlight) !important; 
+      color: var(--training-primary) !important; 
+    } 
+    [cmdk-item]:hover { 
+      background-color: var(--training-highlight) !important; 
+      color: var(--training-primary) !important; 
+    } 
+    [cmdk-item][data-selected=true] { 
+      background-color: var(--training-highlight) !important; 
+      color: var(--training-primary) !important; 
+    }`,
+    badge: 'bg-[var(--training-primary)] rounded-sm text-white',
+  };
+
   if (app === null) {
     return portalDefault();
-  } // for backwards compatibility
+  }
 
   switch (app) {
     case APPS.PORTAL:
@@ -328,6 +389,8 @@ function Glowing(app: APPS | null = null): string | GlowingThemeObject {
       return forms;
     case APPS.INSPECTIONS:
       return inspections;
+    case APPS.TRAINING:
+      return training;
     default:
       return portalDefault();
   }

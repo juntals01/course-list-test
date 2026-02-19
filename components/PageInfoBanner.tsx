@@ -16,14 +16,14 @@ export default function PageInfoBanner({
   return (
     <div
       className={cn(
-        'flex items-start gap-1 rounded-l text-sm flex-col mb-6',
+        'flex items-start gap-0.5 flex-col mt-4 mb-3',
         className
       )}
     >
-      <p className="font-semibold text-[var(--text-primary)] text-lg">
+      <p className="font-bold text-[var(--text-primary)] text-base">
         {title}
       </p>
-      <p className="text-gray-500 text-sm">{subtitle}</p>
+      <p className="text-gray-500 text-[13px]">{subtitle}</p>
     </div>
   );
 }

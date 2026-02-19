@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-inter);
 }
 
 :root {
@@ -74,6 +74,13 @@
   --inspections-primary: #337cf3;
   --inspections-primary-hover: #2d6ce8;
   --inspections-highlight: #337cf31a;
+
+  --training-primary: #FEB836;
+  --training-primary-hover: #E5A52F;
+  --training-highlight: #FEB8361a;
+  --training-third: #FEB8364d;
+  --training-active: #FEB836a5;
+  --training-shadow: #FEB836;
 }
 
 .dark {

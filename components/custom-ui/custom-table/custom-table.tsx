@@ -106,6 +106,7 @@ export function CustomTable<TData>({
             <TableRow key={headerGroup.id} className={headerRowClassName}>
               {headerGroup.headers.map((header) => {
                 const isActionsColumn = header.column.id === 'actions';
+                const isSelectColumn = header.column.id === 'select';
                 const hasDropdown = header.column.id === 'site';
                 const alignmentClass = isActionsColumn ? 'text-center' : '';
 
@@ -118,7 +119,7 @@ export function CustomTable<TData>({
                         ?.width,
                       textAlign: isActionsColumn ? 'center' : undefined,
                       paddingLeft:
-                        isActionsColumn || hasDropdown ? undefined : '16px',
+                        isActionsColumn || hasDropdown || isSelectColumn ? undefined : '16px',
                       overflow:
                         (header.column.columnDef.meta as ColumnMeta)
                           ?.overflow === 'ellipsis'
@@ -141,7 +142,7 @@ export function CustomTable<TData>({
                   >
                     {header.isPlaceholder ? null : (
                       <div
-                        className={`flex items-center ${isActionsColumn ? 'justify-center' : ''} gap-1 ${!isActionsColumn ? 'cursor-pointer select-none' : ''} font-bold`}
+                        className={`flex items-center ${isActionsColumn ? 'justify-center' : ''} gap-1 ${!isActionsColumn ? 'cursor-pointer select-none' : ''} font-semibold`}
                         onClick={
                           !isActionsColumn
                             ? header.column.getToggleSortingHandler()
@@ -170,10 +171,7 @@ export function CustomTable<TData>({
                         {!isActionsColumn && header.column.getCanSort() && (
                           <ArrowUpDownIcon
                             size={14}
-                            className={`
-                              ${header.column.getIsSorted() ? 'text-primary' : 'text-[var(--text-primary)]'}
-                              hover:text-[var(--primary)] ml-1
-                            `}
+                            className="text-[var(--text-primary)] ml-1"
                           />
                         )}
                       </div>
@@ -201,6 +199,7 @@ export function CustomTable<TData>({
                     ?.headers
 .map((header, cellIndex) => {
                       const isActionsColumn = header.column.id === 'actions';
+                      const isSelectColumn = header.column.id === 'select';
                       const hasDropdown = header.column.id === 'site';
                       const alignmentClass = isActionsColumn
                         ? 'text-center align-middle'
@@ -215,7 +214,7 @@ export function CustomTable<TData>({
                               ?.width,
                             textAlign: isActionsColumn ? 'center' : undefined,
                             paddingLeft:
-                              isActionsColumn || hasDropdown
+                              isActionsColumn || hasDropdown || isSelectColumn
                                 ? undefined
                                 : '16px',
                             overflow:
@@ -289,6 +288,7 @@ export function CustomTable<TData>({
                   >
                     {row.getVisibleCells().map((cell) => {
                       const isActionsColumn = cell.column.id === 'actions';
+                      const isSelectColumn = cell.column.id === 'select';
                       const hasDropdown = cell.column.id === 'site';
                       const alignmentClass = isActionsColumn
                         ? 'text-center align-middle'
@@ -303,7 +303,7 @@ export function CustomTable<TData>({
                               ?.width,
                             textAlign: isActionsColumn ? 'center' : undefined,
                             paddingLeft:
-                              isActionsColumn || hasDropdown
+                              isActionsColumn || hasDropdown || isSelectColumn
                                 ? undefined
                                 : '16px',
                             overflow:

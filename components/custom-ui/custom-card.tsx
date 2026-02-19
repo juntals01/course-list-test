@@ -1,11 +1,9 @@
 'use client';
 
 import { ChevronLeft } from 'lucide-react';
-import React, { useEffect } from 'react';
-import { Effect } from 'effect';
+import React from 'react';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { clientLog } from '@/lib/client/logger.client';
 
 type Props = {
   showHeader?: boolean;
@@ -22,18 +20,6 @@ const CustomCard: React.FC<Props> = ({
   onBackClick = null,
   showHeader = true,
 }) => {
-  useEffect(() => {
-    // Log component mount for debugging E2E tests
-    Effect.runFork(
-      clientLog(
-        'info',
-        `[CustomCard] Mounting card with header: "${header}"`,
-        'guest', // No user context usually available here
-        'unknown'
-      )
-    );
-  }, [header]);
-
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
@@ -50,7 +36,6 @@ const CustomCard: React.FC<Props> = ({
                   <ChevronLeft className="font-semibold" />
                 </button>
               )}
-              {/* CHANGED: span -> h1 for accessibility and testing */}
               <h1 className="font-semibold text-xl">{header}</h1>
             </div>
             <p className="text-base ">{subHeader}</p>

@@ -50,7 +50,7 @@ const CustomInputNumberRocker: React.FC<CustomInputNumberRockerProps> = ({
         placeholder="No. of Seats"
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        onInput={handleInput}
+        onInput={handleInput as React.FormEventHandler<HTMLInputElement>}
         className={`
           pr-16 appearance-none rounded-sm shadow-none
           ${Glowing(app).inputBox}
