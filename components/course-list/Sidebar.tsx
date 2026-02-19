@@ -118,13 +118,11 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
         <nav className="flex flex-col gap-0.5">
           {appItems.map((item) => {
             const isActive = item.activePrefix ? pathname.startsWith(item.activePrefix) : false;
-            const cls = `flex items-center gap-2.5 px-4 py-[6px] rounded-md text-[13px] font-normal leading-[1.5] transition-colors w-full text-left ${
-              isActive
-                ? 'font-medium'
-                : 'text-[#4B5563] hover:bg-gray-100'
-            }`;
+            const cls = isActive
+              ? 'flex items-center gap-2.5 px-4 py-[6px] text-[13px] font-medium leading-[1.5] transition-colors w-full text-left border-l-[3px]'
+              : 'flex items-center gap-2.5 px-4 py-[6px] text-[13px] font-normal leading-[1.5] transition-colors w-full text-left border-l-[3px] border-l-transparent text-[#4B5563] hover:bg-gray-100';
             const style = isActive
-              ? { backgroundColor: item.activeHighlight, color: item.activeTextColor }
+              ? { backgroundColor: item.activeHighlight, color: item.activeTextColor, borderLeftColor: item.color }
               : undefined;
             const content = (
               <>

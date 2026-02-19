@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   GraduationCap,
@@ -57,6 +57,7 @@ function getBreadcrumb(pathname: string): string[] {
     if (pathname === '/policies/categories/archived') return ['Categories', 'Archived Categories'];
     if (pathname.startsWith('/policies/categories')) return ['Categories', 'Active Categories'];
     if (pathname.startsWith('/policies/settings')) return ['Settings'];
+    if (pathname === '/policies/view') return ['View Policies & Procedures'];
     return ['Articles', 'All Articles'];
   }
 
@@ -141,9 +142,11 @@ function TrainingTabs({ pathname }: { pathname: string }) {
 }
 
 function PoliciesTabs({ pathname }: { pathname: string }) {
+  const router = useRouter();
   const isArticles = pathname.startsWith('/policies/articles');
   const isCategories = pathname.startsWith('/policies/categories');
   const isSettings = pathname.startsWith('/policies/settings');
+  const isViewPage = pathname === '/policies/view';
 
   const activeClass = 'text-[var(--policiesAndProcedures-primary)] font-medium bg-[#F5F9EB]';
   const inactiveClass = 'text-[#6B7280] hover:text-[var(--policiesAndProcedures-primary)] hover:bg-[#F5F9EB]/50';
@@ -223,7 +226,17 @@ function PoliciesTabs({ pathname }: { pathname: string }) {
       </div>
       <div className="hidden md:flex items-center gap-2">
         <span className="text-sm text-[#6B7280]">View Policies & Procedures</span>
-        <Switch className="data-[state=checked]:bg-[var(--policiesAndProcedures-primary)]" />
+        <Switch
+          checked={isViewPage}
+          onCheckedChange={(checked) => {
+            if (checked) {
+              router.push('/policies/view');
+            } else {
+              router.push('/policies/articles');
+            }
+          }}
+          className="data-[state=checked]:bg-[var(--policiesAndProcedures-primary)]"
+        />
       </div>
     </div>
   );
