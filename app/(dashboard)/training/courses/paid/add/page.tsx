@@ -12,14 +12,14 @@ import CustomAccordion from '@/components/custom-ui/custom-accordion';
 import CustomInput from '@/components/custom-ui/custom-input';
 import { Switch } from '@/components/ui/switch';
 import { APPS, type CourseUnit, type UnitType } from '@/types/courses';
-import { freeCourseSchema, type FreeCourseFormData } from '@/lib/schemas/course-form';
+import { paidCourseSchema, type PaidCourseFormData } from '@/lib/schemas/course-form';
 import UnitFields from '@/components/course-form/UnitFields';
 import AddActivityModal from '@/components/course-form/AddActivityModal';
 import JobRolesSection from '@/components/course-form/JobRolesSection';
 
 let nextUnitId = 2;
 
-function createUnit(type: UnitType, index: number): CourseUnit {
+function createUnit(type: UnitType): CourseUnit {
   return {
     id: nextUnitId++,
     name: '',
@@ -27,39 +27,40 @@ function createUnit(type: UnitType, index: number): CourseUnit {
     description: '',
     files: [],
     enabled: true,
-    hasLicenseExpiry: type === 'License' ? undefined : undefined,
+    hasLicenseExpiry: undefined,
     selectedArticle: '',
     scormFile: '',
   };
 }
 
-export default function AddFreeCoursePage() {
+export default function AddPaidCoursePage() {
   const [units, setUnits] = useState<CourseUnit[]>([
     { id: 1, name: '', type: 'Assignment', description: '', files: [], enabled: true },
   ]);
   const [activityModalOpen, setActivityModalOpen] = useState(false);
 
   const {
-    register,
     handleSubmit,
     setValue,
     watch,
     formState: { errors },
-  } = useForm<FreeCourseFormData>({
-    resolver: zodResolver(freeCourseSchema),
+  } = useForm<PaidCourseFormData>({
+    resolver: zodResolver(paidCourseSchema),
     defaultValues: {
+      monthlyPrice: '',
       courseName: '',
       summary: '',
       enrollmentValidity: '',
-      refresherPeriod: '',
+      completionValidity: '',
       units: [{ id: 1, name: '', type: 'Assignment', description: '', files: [], enabled: true }],
     },
   });
 
+  const monthlyPrice = watch('monthlyPrice');
   const courseName = watch('courseName');
   const summary = watch('summary');
   const enrollmentValidity = watch('enrollmentValidity');
-  const refresherPeriod = watch('refresherPeriod');
+  const completionValidity = watch('completionValidity');
 
   const syncUnitsToForm = (updated: CourseUnit[]) => {
     setUnits(updated);
@@ -75,7 +76,7 @@ export default function AddFreeCoursePage() {
   };
 
   const addUnit = (type: UnitType) => {
-    const newUnit = createUnit(type, units.length + 1);
+    const newUnit = createUnit(type);
     syncUnitsToForm([...units, newUnit]);
   };
 
@@ -83,20 +84,20 @@ export default function AddFreeCoursePage() {
     syncUnitsToForm(units.map((u) => (u.id === id ? { ...u, ...updates } : u)));
   };
 
-  const onSubmit = (data: FreeCourseFormData) => {
-    console.log('Free Course submitted:', data);
+  const onSubmit = (data: PaidCourseFormData) => {
+    console.log('Paid Course submitted:', data);
   };
 
   const onSaveAndClose = () => {
     handleSubmit((data) => {
-      console.log('Free Course saved & closed:', data);
+      console.log('Paid Course saved & closed:', data);
     })();
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex-1 px-4 md:px-6 py-4 flex flex-col">
       <Link
-        href="/courses"
+        href="/training/courses/paid"
         className="inline-flex items-center gap-1.5 text-[var(--training-primary)] text-sm font-medium hover:underline mb-4"
       >
         <ArrowLeft size={16} />
@@ -105,67 +106,35 @@ export default function AddFreeCoursePage() {
 
       <div className="mb-6">
         <h1 className="text-lg font-bold text-[var(--text-primary)]">
-          Add Free Course
+          Add Paid Course
         </h1>
-        <p className="text-sm text-gray-500 mt-1">Create and publish course</p>
+        <p className="text-sm text-gray-500 mt-1">
+          Create and publish paid course
+        </p>
       </div>
 
       <div className="space-y-6 flex-1">
         <CustomAccordion title="Course Details" defaultExpanded={true}>
           <div className="space-y-5">
             <div className="space-y-1 md:space-y-0 md:grid md:grid-cols-[200px_1fr] md:items-center md:gap-4">
-              <label className="text-sm font-medium text-[var(--text-primary)]">
-                Course Name
-              </label>
-              <CustomInput
-                name="courseName"
-                placeholder="Course Name"
-                value={courseName}
-                onValueChange={(val) => setValue('courseName', val, { shouldValidate: true })}
-                app={APPS.TRAINING}
-                validationError={errors.courseName?.message}
-              />
+              <label className="text-sm font-medium text-[var(--text-primary)]">Monthly Price</label>
+              <CustomInput name="monthlyPrice" placeholder="Enter Amount" value={monthlyPrice} onValueChange={(val) => setValue('monthlyPrice', val, { shouldValidate: true })} app={APPS.TRAINING} tooltip="Monthly subscription price" validationError={errors.monthlyPrice?.message} />
+            </div>
+            <div className="space-y-1 md:space-y-0 md:grid md:grid-cols-[200px_1fr] md:items-center md:gap-4">
+              <label className="text-sm font-medium text-[var(--text-primary)]">Course Name</label>
+              <CustomInput name="courseName" placeholder="Course Name" value={courseName} onValueChange={(val) => setValue('courseName', val, { shouldValidate: true })} app={APPS.TRAINING} validationError={errors.courseName?.message} />
             </div>
             <div className="space-y-1 md:space-y-0 md:grid md:grid-cols-[200px_1fr] md:items-start md:gap-4">
-              <label className="text-sm font-medium text-gray-500 flex items-center gap-1">
-                Course Summary <span className="text-gray-400 text-xs">(optional)</span>
-              </label>
-              <CustomInput
-                name="summary"
-                placeholder="Course Summary"
-                value={summary}
-                onValueChange={(val) => setValue('summary', val)}
-                multiline
-                rows={3}
-                app={APPS.TRAINING}
-                tooltip="Brief summary of the course content"
-              />
+              <label className="text-sm font-medium text-gray-500 flex items-center gap-1">Course Summary <span className="text-gray-400 text-xs">(optional)</span></label>
+              <CustomInput name="summary" placeholder="Course Summary" value={summary} onValueChange={(val) => setValue('summary', val)} multiline rows={3} app={APPS.TRAINING} tooltip="Brief summary of the course content" />
             </div>
             <div className="space-y-1 md:space-y-0 md:grid md:grid-cols-[200px_1fr] md:items-center md:gap-4">
-              <label className="text-sm font-medium text-gray-500 flex items-center gap-1">
-                Enrollment Validity <span className="text-gray-400 text-xs">(optional)</span>
-              </label>
-              <CustomInput
-                name="enrollmentValidity"
-                placeholder="Enter No. of Days"
-                value={enrollmentValidity}
-                onValueChange={(val) => setValue('enrollmentValidity', val)}
-                app={APPS.TRAINING}
-                tooltip="Number of days the enrollment remains valid"
-              />
+              <label className="text-sm font-medium text-gray-500 flex items-center gap-1">Enrollment Validity <span className="text-gray-400 text-xs">(optional)</span></label>
+              <CustomInput name="enrollmentValidity" placeholder="Enter No. of Days" value={enrollmentValidity} onValueChange={(val) => setValue('enrollmentValidity', val)} app={APPS.TRAINING} tooltip="Number of days the enrollment remains valid" />
             </div>
             <div className="space-y-1 md:space-y-0 md:grid md:grid-cols-[200px_1fr] md:items-center md:gap-4">
-              <label className="text-sm font-medium text-gray-500 flex items-center gap-1">
-                Refresher Period <span className="text-gray-400 text-xs">(optional)</span>
-              </label>
-              <CustomInput
-                name="refresherPeriod"
-                placeholder="Enter No. of Days"
-                value={refresherPeriod}
-                onValueChange={(val) => setValue('refresherPeriod', val)}
-                app={APPS.TRAINING}
-                tooltip="Number of days before the course needs to be retaken"
-              />
+              <label className="text-sm font-medium text-gray-500 flex items-center gap-1">Refresher Period <span className="text-gray-400 text-xs">(optional)</span></label>
+              <CustomInput name="completionValidity" placeholder="Enter No. of Days" value={completionValidity} onValueChange={(val) => setValue('completionValidity', val)} app={APPS.TRAINING} tooltip="Number of days before the course needs to be retaken" />
             </div>
           </div>
         </CustomAccordion>

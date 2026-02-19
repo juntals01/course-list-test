@@ -3,6 +3,8 @@
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
+import { APPS } from '@/types/courses';
+import { getAppCssVar } from '@/lib/theme-utils';
 
 export type CardAction = {
   icon: React.ReactNode;
@@ -24,6 +26,7 @@ type MobileDataCardProps = {
   fields: CardField[];
   headerRight?: React.ReactNode;
   headerContent?: React.ReactNode;
+  app?: APPS;
 };
 
 export function MobileDataCard({
@@ -35,8 +38,10 @@ export function MobileDataCard({
   fields,
   headerRight,
   headerContent,
+  app = APPS.TRAINING,
 }: MobileDataCardProps) {
   const actionsInHeader = actionsPosition === 'header';
+  const cssVar = getAppCssVar(app);
 
   return (
     <div className="border border-gray-200 rounded-md overflow-hidden bg-white">
@@ -47,7 +52,7 @@ export function MobileDataCard({
             <Checkbox
               checked={selected}
               onCheckedChange={(val) => onSelect(!!val)}
-              className="shrink-0 border-gray-300 data-[state=checked]:bg-[var(--training-primary)] data-[state=checked]:border-[var(--training-primary)]"
+              className={`shrink-0 border-gray-300 data-[state=checked]:bg-[var(${cssVar})] data-[state=checked]:border-[var(${cssVar})]`}
             />
           )}
           {headerContent ? (
@@ -62,7 +67,7 @@ export function MobileDataCard({
             <button
               key={i}
               onClick={action.onClick}
-              className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-[var(--training-primary)] transition-colors rounded-md hover:bg-gray-50"
+              className={`w-8 h-8 flex items-center justify-center text-gray-500 hover:text-[var(${cssVar})] transition-colors rounded-md hover:bg-gray-50`}
               aria-label={action.label}
             >
               {action.icon}
@@ -78,7 +83,7 @@ export function MobileDataCard({
             <button
               key={i}
               onClick={action.onClick}
-              className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-[var(--training-primary)] transition-colors rounded-md hover:bg-gray-50"
+              className={`w-8 h-8 flex items-center justify-center text-gray-500 hover:text-[var(${cssVar})] transition-colors rounded-md hover:bg-gray-50`}
               aria-label={action.label}
             >
               {action.icon}
@@ -108,16 +113,19 @@ type MobileSelectAllRowProps = {
   checked: boolean | 'indeterminate';
   onCheckedChange: (val: boolean) => void;
   sortIcon?: React.ReactNode;
+  app?: APPS;
 };
 
-export function MobileSelectAllRow({ checked, onCheckedChange, sortIcon }: MobileSelectAllRowProps) {
+export function MobileSelectAllRow({ checked, onCheckedChange, sortIcon, app = APPS.TRAINING }: MobileSelectAllRowProps) {
+  const cssVar = getAppCssVar(app);
+
   return (
     <div className="flex items-center justify-between px-4 py-3 border border-gray-200 rounded-md bg-white">
       <div className="flex items-center gap-3">
         <Checkbox
           checked={checked}
           onCheckedChange={(val) => onCheckedChange(!!val)}
-          className="border-gray-300 data-[state=checked]:bg-[var(--training-primary)] data-[state=checked]:border-[var(--training-primary)]"
+          className={`border-gray-300 data-[state=checked]:bg-[var(${cssVar})] data-[state=checked]:border-[var(${cssVar})]`}
         />
         <span className="text-sm text-[#374151]">Select All</span>
       </div>

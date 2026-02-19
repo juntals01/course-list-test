@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { APPS } from '@/types/courses';
+import { getAppCssVar, getAppHoverBg } from '@/lib/theme-utils';
 
 const LAST_MODIFIED_OPTIONS = [
   'Today',
@@ -30,6 +31,7 @@ const LAST_MODIFIED_OPTIONS = [
 
 type FiltersPopoverProps = {
   onApply?: (filters: FilterValues) => void;
+  app?: APPS;
 };
 
 export type FilterValues = {
@@ -38,11 +40,14 @@ export type FilterValues = {
   lastModified: string;
 };
 
-export default function FiltersPopover({ onApply }: FiltersPopoverProps) {
+export default function FiltersPopover({ onApply, app = APPS.TRAINING }: FiltersPopoverProps) {
   const [open, setOpen] = useState(false);
   const [minUnits, setMinUnits] = useState('');
   const [maxUnits, setMaxUnits] = useState('');
   const [lastModified, setLastModified] = useState('Today');
+
+  const cssVar = getAppCssVar(app);
+  const hoverBg = getAppHoverBg(app);
 
   const handleReset = () => {
     setMinUnits('');
@@ -61,7 +66,7 @@ export default function FiltersPopover({ onApply }: FiltersPopoverProps) {
         <div>
           <CustomButton
             title="Filters"
-            app={APPS.TRAINING}
+            app={app}
             variant={BUTTON_VARIANTS.OUTLINE}
             leadingIcon={<SlidersHorizontal size={14} />}
             width="px-4 py-2"
@@ -75,7 +80,10 @@ export default function FiltersPopover({ onApply }: FiltersPopoverProps) {
             <button
               type="button"
               onClick={handleReset}
-              className="text-sm font-medium text-[var(--training-primary)] border border-[var(--training-primary)] rounded-md px-4 py-2 hover:bg-[#FFF7ED] transition-colors"
+              className="text-sm font-medium rounded-md px-4 py-2 transition-colors"
+              style={{ color: `var(${cssVar})`, border: `1px solid var(${cssVar})` }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = hoverBg; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = ''; }}
             >
               Reset All
             </button>
@@ -83,14 +91,16 @@ export default function FiltersPopover({ onApply }: FiltersPopoverProps) {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="text-sm font-medium text-[var(--training-primary)] border border-gray-200 rounded-md px-6 py-2 hover:bg-gray-50 transition-colors"
+                className="text-sm font-medium border border-gray-200 rounded-md px-6 py-2 hover:bg-gray-50 transition-colors"
+                style={{ color: `var(${cssVar})` }}
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleApply}
-                className="text-sm font-medium text-white bg-[var(--training-primary)] rounded-md px-6 py-2 hover:opacity-90 transition-opacity"
+                className="text-sm font-medium text-white rounded-md px-6 py-2 hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: `var(${cssVar})` }}
               >
                 Apply
               </button>
@@ -109,7 +119,7 @@ export default function FiltersPopover({ onApply }: FiltersPopoverProps) {
                 placeholder="Enter Total Units"
                 value={minUnits}
                 onValueChange={setMinUnits}
-                app={APPS.TRAINING}
+                app={app}
               />
             </div>
             <div>
@@ -121,7 +131,7 @@ export default function FiltersPopover({ onApply }: FiltersPopoverProps) {
                 placeholder="Enter Total Units"
                 value={maxUnits}
                 onValueChange={setMaxUnits}
-                app={APPS.TRAINING}
+                app={app}
               />
             </div>
           </div>

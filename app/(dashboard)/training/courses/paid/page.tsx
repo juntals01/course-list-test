@@ -57,8 +57,8 @@ export default function PaidCoursesPage() {
   const columns = useMemo(
     () =>
       getCourseListColumns({
-        handleView: (course) => router.push(`/courses/${course.id}`),
-        handleEdit: (course) => router.push(`/courses/paid/add`),
+        handleView: (course) => router.push(`/training/courses/${course.id}`),
+        handleEdit: (course) => router.push(`/training/courses/paid/add`),
         handleDuplicate: (course) => console.log('Duplicate:', course.id),
         handleArchive: (course) => console.log('Archive:', course.id),
         handleAssign: (course) => {
@@ -105,7 +105,7 @@ export default function PaidCoursesPage() {
         <PageInfoBanner title="Paid Courses List" subtitle="List of premium courses available on the platform." />
 
         <div className="mt-4 md:hidden">
-          <CustomButton title="Add Paid Course" url="/courses/paid/add" leadingIcon={<Plus size={16} />} app={APPS.TRAINING} buttonClass="h-[42px] text-sm rounded-md w-full" width="w-full" />
+          <CustomButton title="Add Paid Course" url="/training/courses/paid/add" leadingIcon={<Plus size={16} />} app={APPS.TRAINING} buttonClass="h-[42px] text-sm rounded-md w-full" width="w-full" />
         </div>
 
         <div className="flex items-center justify-between mt-4 md:mt-8 mb-4">
@@ -120,7 +120,7 @@ export default function PaidCoursesPage() {
             </div>
           </div>
           <div className="hidden md:block">
-            <CustomButton title="Add Paid Course" url="/courses/paid/add" leadingIcon={<Plus size={16} />} app={APPS.TRAINING} buttonClass="h-[36px] text-sm rounded-md" width="px-4 py-2" />
+            <CustomButton title="Add Paid Course" url="/training/courses/paid/add" leadingIcon={<Plus size={16} />} app={APPS.TRAINING} buttonClass="h-[36px] text-sm rounded-md" width="px-4 py-2" />
           </div>
         </div>
 
@@ -138,8 +138,8 @@ export default function PaidCoursesPage() {
                 key={course.id}
                 id={course.id}
                 actions={[
-                  { icon: <Eye size={16} />, onClick: () => router.push(`/courses/${course.id}`), label: 'View' },
-                  { icon: <Pencil size={16} />, onClick: () => router.push('/courses/paid/add'), label: 'Edit' },
+                  { icon: <Eye size={16} />, onClick: () => router.push(`/training/courses/${course.id}`), label: 'View' },
+                  { icon: <Pencil size={16} />, onClick: () => router.push('/training/courses/paid/add'), label: 'Edit' },
                   { icon: <Plus size={16} />, onClick: () => { setSelectedCourseName(course.name); setAssignDialogOpen(true); }, label: 'Add to Company' },
                   { icon: <Trash2 size={16} />, onClick: () => console.log('Delete:', course.id), label: 'Delete' },
                 ]}

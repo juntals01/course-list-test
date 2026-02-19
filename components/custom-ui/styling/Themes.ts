@@ -59,7 +59,7 @@ const Themes = (app: APPS) => {
     const button = {
       default: ` border border-[var(--policiesAndProcedures-primary)] bg-[var(--policiesAndProcedures-primary)] text-white hover:bg-[var(--policiesAndProcedures-accent)] active:bg-[var(--policiesAndProcedures-active)]`,
       destructive: `border border-destructive bg-destructive text-white hover:bg-destructive/90`,
-      outline: ` border border-[var(--policiesAndProcedures-primary)] text-[var(--policiesAndProcedures-primary)] hover:bg-[var(--policiesAndProcedures-highlight)] hover:text-[var(--policiesAndProcedures-primary)] active:bg-[var(--policiesAndProcedures-third)] active:text-[var(--policiesAndProcedures-primary)]`,
+      outline: `bg-white border border-[var(--policiesAndProcedures-primary)] text-[var(--policiesAndProcedures-primary)] hover:bg-[var(--policiesAndProcedures-highlight)] hover:text-[var(--policiesAndProcedures-primary)] active:bg-[var(--policiesAndProcedures-third)] active:text-[var(--policiesAndProcedures-primary)]`,
       secondary: `bg-[var(--policiesAndProcedures-highlight)] text-[var(--policiesAndProcedures-primary)] hover:bg-[var(--policiesAndProcedures-highlight)]/80`,
       ghost: ` hover:bg-[var(--policiesAndProcedures-highlight)] hover:text-[var(--policiesAndProcedures-primary)] active:bg-[var(--policiesAndProcedures-third)] active:text-[var(--policiesAndProcedures-primary)]`,
       link: `text-[var(--policiesAndProcedures-primary)] underline-offset-4 hover:underline`,

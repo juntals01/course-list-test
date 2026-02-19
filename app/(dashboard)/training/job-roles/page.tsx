@@ -62,7 +62,7 @@ export default function ActiveJobRolesPage() {
   const columns = useMemo(
     () =>
       getActiveJobRoleColumns({
-        handleEdit: (role) => router.push(`/job-roles/${role.id}/edit`),
+        handleEdit: (role) => router.push(`/training/job-roles/${role.id}/edit`),
         handleAddToCompany: (role) => console.log('Add to company:', role.id),
         handleSuspend: (role) => {
           setData((prev) =>
@@ -129,7 +129,7 @@ export default function ActiveJobRolesPage() {
         <div className="mt-4 md:hidden">
           <CustomButton
             title="Add Job Role"
-            url="/job-roles/add"
+            url="/training/job-roles/add"
             leadingIcon={<Plus size={16} />}
             app={APPS.TRAINING}
             buttonClass="h-[36px] text-sm rounded-md w-full"
@@ -178,7 +178,7 @@ export default function ActiveJobRolesPage() {
           <div className="hidden md:block">
             <CustomButton
               title="Add Job Role"
-              url="/job-roles/add"
+              url="/training/job-roles/add"
               leadingIcon={<Plus size={16} />}
               app={APPS.TRAINING}
               buttonClass="h-[36px] text-sm rounded-md"
@@ -240,7 +240,7 @@ export default function ActiveJobRolesPage() {
                     }
                     actionsPosition="below"
                     actions={[
-                      { icon: <Pencil size={16} />, onClick: () => router.push(`/job-roles/${role.id}/edit`), label: 'Edit' },
+                      { icon: <Pencil size={16} />, onClick: () => router.push(`/training/job-roles/${role.id}/edit`), label: 'Edit' },
                       { icon: <Plus size={16} />, onClick: () => console.log('Add to company:', role.id), label: 'Add to Company' },
                       { icon: <Ban size={16} />, onClick: () => setData((prev) => prev.map((r) => (r.id === role.id ? { ...r, status: false } : r))), label: 'Suspend' },
                       { icon: <ArchiveIcon size={16} />, onClick: () => setData((prev) => prev.filter((r) => r.id !== role.id)), label: 'Archive' },

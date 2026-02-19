@@ -1,6 +1,8 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import {
   Search,
@@ -28,7 +30,10 @@ type AppItem = {
   label: string;
   icon: React.ReactNode;
   color: string;
-  active?: boolean;
+  href?: string;
+  activePrefix?: string;
+  activeHighlight?: string;
+  activeTextColor?: string;
 };
 
 const portalNavItems: NavItem[] = [
@@ -41,10 +46,10 @@ const portalNavItems: NavItem[] = [
 
 /* Figma icon spec: w:28 h:28 border-radius:99 padding:4px → 20px inner icon area → icon size 16px */
 const appItems: AppItem[] = [
-  { label: 'Policies and Procedures', icon: <FileText size={16} />, color: '#6da017' },
+  { label: 'Policies and Procedures', icon: <FileText size={16} />, color: '#6da017', href: '/policies/articles', activePrefix: '/policies', activeHighlight: '#F5F9EB', activeTextColor: 'var(--policiesAndProcedures-primary)' },
   { label: 'Forms', icon: <ClipboardList size={16} />, color: '#08a273' },
   { label: 'Inspections', icon: <ShieldCheck size={16} />, color: '#337cf3' },
-  { label: 'Training', icon: <GraduationCap size={16} />, color: '#FEB836', active: true },
+  { label: 'Training', icon: <GraduationCap size={16} />, color: '#FEB836', href: '/training/courses', activePrefix: '/training', activeHighlight: '#FFF8F0', activeTextColor: 'var(--training-primary)' },
   { label: 'Hazards', icon: <AlertTriangle size={16} />, color: '#EF4444' },
   { label: 'Contractors', icon: <HardHat size={16} />, color: '#F97316' },
 ];
@@ -55,10 +60,12 @@ type SidebarProps = {
 };
 
 export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
+  const pathname = usePathname();
+
   return (
     <div className="relative flex flex-col h-full border-r border-gray-200">
-      {/* Top section: Logo + Search + Portal Management | pt:12 gap:20 border-b pb:16 */}
-      <div className="flex flex-col pt-3 pb-4 gap-5 border-b border-gray-200">
+      {/* Top section: Logo + Search + Portal Management */}
+      <div className="flex flex-col pt-4 pb-3 gap-4 border-b border-gray-200">
         {/* Logo */}
         <div className="px-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -71,28 +78,27 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           />
         </div>
 
-        {/* Search: w:238 h:41 py:12 rounded:8 border:1 */}
+        {/* Search */}
         <div className="relative px-4">
           <div className="absolute left-7 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
             <Search size={14} />
           </div>
           <Input
             placeholder="Find anything"
-            className="bg-white border border-gray-300 rounded-lg h-[41px] text-sm pl-9 pr-3 py-3 shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400"
+            className="bg-white border border-gray-300 rounded-md h-[36px] text-[13px] pl-9 pr-3 py-2 shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 placeholder:text-gray-400"
           />
         </div>
 
-        {/* Portal Management: gap:8 */}
-        <div className="flex flex-col gap-2">
-          {/* Label: px:16 | 12px, weight:800, leading:100%, tracking:0% */}
-          <p className="px-4 text-[12px] font-extrabold text-[#6B7280] uppercase leading-none tracking-normal">
+        {/* Portal Management */}
+        <div className="flex flex-col gap-1.5 pt-1">
+          <p className="px-4 text-[11px] font-extrabold text-[#9CA3AF] uppercase leading-none tracking-wider">
             Portal Management
           </p>
-          <nav className="flex flex-col gap-2">
+          <nav className="flex flex-col gap-0.5">
             {portalNavItems.map((item) => (
               <button
                 key={item.label}
-                className="flex items-center gap-2.5 px-4 py-[6px] rounded-md text-sm font-normal leading-[1.5] text-[#4B5563] hover:bg-gray-100 transition-colors w-full text-left"
+                className="flex items-center gap-2.5 px-4 py-[6px] rounded-md text-[13px] font-normal leading-[1.5] text-[#4B5563] hover:bg-gray-100 transition-colors w-full text-left"
               >
                 <span className="w-4 h-4 flex items-center justify-center text-[#6B7280] shrink-0">
                   {item.icon}
@@ -104,32 +110,43 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
         </div>
       </div>
 
-      {/* Apps section: pt:16 pb:24 gap:8 border-b */}
-      <div className="flex flex-col pt-4 pb-6 gap-2 border-b border-gray-200">
-        {/* Label: px:16 | 12px, weight:800, leading:100%, tracking:0% */}
-        <p className="px-4 text-[12px] font-extrabold text-[#6B7280] uppercase leading-none tracking-normal">
+      {/* Apps section */}
+      <div className="flex flex-col pt-5 pb-8 gap-2 border-b border-gray-200">
+        <p className="px-4 text-[11px] font-extrabold text-[#9CA3AF] uppercase leading-none tracking-wider">
           Apps
         </p>
-        {/* App items: icon w:28 h:28 rounded:99 p:4 | gap between icon and text: 10px */}
-        <nav className="flex flex-col gap-2">
-          {appItems.map((item) => (
-            <button
-              key={item.label}
-              className={`flex items-center gap-2.5 px-4 py-[6px] rounded-md text-sm font-normal leading-[1.5] transition-colors w-full text-left ${
-                item.active
-                  ? 'bg-[#FFF8F0] text-[var(--training-primary)] font-medium'
-                  : 'text-[#4B5563] hover:bg-gray-100'
-              }`}
-            >
-              <span
-                className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-white p-1"
-                style={{ backgroundColor: item.color }}
-              >
-                {item.icon}
-              </span>
-              <span>{item.label}</span>
-            </button>
-          ))}
+        <nav className="flex flex-col gap-0.5">
+          {appItems.map((item) => {
+            const isActive = item.activePrefix ? pathname.startsWith(item.activePrefix) : false;
+            const cls = `flex items-center gap-2.5 px-4 py-[6px] rounded-md text-[13px] font-normal leading-[1.5] transition-colors w-full text-left ${
+              isActive
+                ? 'font-medium'
+                : 'text-[#4B5563] hover:bg-gray-100'
+            }`;
+            const style = isActive
+              ? { backgroundColor: item.activeHighlight, color: item.activeTextColor }
+              : undefined;
+            const content = (
+              <>
+                <span
+                  className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-white p-1"
+                  style={{ backgroundColor: item.color }}
+                >
+                  {item.icon}
+                </span>
+                <span>{item.label}</span>
+              </>
+            );
+            return item.href ? (
+              <Link key={item.label} href={item.href} className={cls} style={style}>
+                {content}
+              </Link>
+            ) : (
+              <button key={item.label} className={cls} style={style}>
+                {content}
+              </button>
+            );
+          })}
         </nav>
       </div>
 

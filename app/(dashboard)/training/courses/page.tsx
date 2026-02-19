@@ -87,8 +87,8 @@ export default function CoursesPage() {
   const columns = useMemo(
     () =>
       getCourseListColumns({
-        handleView: (course) => router.push(`/courses/${course.id}`),
-        handleEdit: (course) => router.push(`/courses/add`),
+        handleView: (course) => router.push(`/training/courses/${course.id}`),
+        handleEdit: (course) => router.push(`/training/courses/add`),
         handleDuplicate: (course) =>
           dispatch({ type: ActionType.OPEN_DUPLICATE_DIALOG, payload: course }),
         handleArchive: handlers.handleOpenArchiveDialog,
@@ -162,7 +162,7 @@ export default function CoursesPage() {
         <div className="mt-4 md:hidden">
           <CustomButton
             title="Add Free Course"
-            url="/courses/add"
+            url="/training/courses/add"
             leadingIcon={<Plus size={16} />}
             app={APPS.TRAINING}
             buttonClass="h-[42px] text-sm rounded-md w-full"
@@ -214,7 +214,7 @@ export default function CoursesPage() {
           <div className="hidden md:block">
             <CustomButton
               title="Add Free Course"
-              url="/courses/add"
+              url="/training/courses/add"
               leadingIcon={<Plus size={16} />}
               app={APPS.TRAINING}
               buttonClass="h-[36px] text-sm rounded-md"
@@ -257,8 +257,8 @@ export default function CoursesPage() {
                 selected={row.getIsSelected()}
                 onSelect={(val) => row.toggleSelected(val)}
                 actions={[
-                  { icon: <Eye size={16} />, onClick: () => router.push(`/courses/${course.id}`), label: 'View' },
-                  { icon: <Pencil size={16} />, onClick: () => router.push('/courses/add'), label: 'Edit' },
+                  { icon: <Eye size={16} />, onClick: () => router.push(`/training/courses/${course.id}`), label: 'View' },
+                  { icon: <Pencil size={16} />, onClick: () => router.push('/training/courses/add'), label: 'Edit' },
                   { icon: <Copy size={16} />, onClick: () => dispatch({ type: ActionType.OPEN_DUPLICATE_DIALOG, payload: course }), label: 'Duplicate' },
                   { icon: <Plus size={16} />, onClick: () => { setAssignCourseName(course.name); setAssignDialogOpen(true); }, label: 'Add to Company' },
                   { icon: <List size={16} />, onClick: () => { setAssignCourseName(course.name); setJobRolesDialogOpen(true); }, label: 'Show Job Roles' },

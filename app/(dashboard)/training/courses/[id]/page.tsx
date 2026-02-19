@@ -15,7 +15,7 @@ export default function ViewCoursePage() {
   return (
     <div className="flex-1 px-4 md:px-6 py-4">
       <Link
-        href="/courses"
+        href="/training/courses"
         className="inline-flex items-center gap-1.5 text-[var(--training-primary)] text-sm font-medium hover:underline mb-4"
       >
         <ArrowLeft size={16} />

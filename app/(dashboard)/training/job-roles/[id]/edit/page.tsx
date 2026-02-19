@@ -10,7 +10,7 @@ import {
   type SortingState,
   type RowSelectionState,
 } from '@tanstack/react-table';
-import { ArrowLeft, Plus, Trash2, Search, ArrowUpDown } from 'lucide-react';
+import { ArrowLeft, Plus, Trash2, Search, ArrowUpDown, InfoIcon } from 'lucide-react';
 
 import CustomButton from '@/components/custom-ui/custom-button';
 import { BUTTON_VARIANTS } from '@/components/custom-ui/button-variants';
@@ -22,9 +22,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { APPS, type JobRoleCourse } from '@/types/courses';
 import { MOCK_JOB_ROLE_COURSES } from '@/lib/mock-course-detail';
 import { MobileDataCard, MobileSelectAllRow } from '@/components/custom-ui/mobile-data-card';
-import { InfoIcon } from 'lucide-react';
 
-function getJobRoleCourseColumns(onRemove: (id: number) => void): ColumnDef<JobRoleCourse>[] {
+function getEditJobRoleCourseColumns(onRemove: (id: number) => void): ColumnDef<JobRoleCourse>[] {
   return [
     {
       id: 'select',
@@ -55,7 +54,7 @@ function getJobRoleCourseColumns(onRemove: (id: number) => void): ColumnDef<JobR
   ];
 }
 
-export default function AddJobRolePage() {
+export default function EditJobRolePage() {
   const [jobRoleName, setJobRoleName] = useState('Forklift Operator');
   const [courses, setCourses] = useState<JobRoleCourse[]>(MOCK_JOB_ROLE_COURSES);
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -71,7 +70,7 @@ export default function AddJobRolePage() {
     setRowSelection({});
   };
 
-  const columns = useMemo(() => getJobRoleCourseColumns(handleRemoveCourse), []);
+  const columns = useMemo(() => getEditJobRoleCourseColumns(handleRemoveCourse), []);
 
   const table = useReactTable({
     data: courses,
@@ -86,13 +85,13 @@ export default function AddJobRolePage() {
 
   return (
     <div className="flex-1 px-4 md:px-6 py-4 flex flex-col">
-      <Link href="/job-roles" className="inline-flex items-center gap-1.5 text-[var(--training-primary)] text-sm font-medium hover:underline mb-4">
+      <Link href="/training/job-roles" className="inline-flex items-center gap-1.5 text-[var(--training-primary)] text-sm font-medium hover:underline mb-4">
         <ArrowLeft size={16} /> Back
       </Link>
 
       <div className="mb-6">
-        <h1 className="text-lg font-bold text-[var(--text-primary)]">Add Job Role</h1>
-        <p className="text-sm text-gray-500 mt-1">Create a new job role and assign courses</p>
+        <h1 className="text-lg font-bold text-[var(--text-primary)]">Edit Job Role</h1>
+        <p className="text-sm text-gray-500 mt-1">Modify job role and course details</p>
       </div>
 
       <div className="space-y-6 flex-1">

@@ -1,0 +1,813 @@
+{
+  "version": "2.1.0",
+  "description": "Pixel-perfect design specification for all modules, extracted from Figma screenshots",
+  "figmaPrototype": "https://www.figma.com/proto/lSmqdlBEtWpqwRTLUEjtir/YS-Portal-Functions?node-id=5407-22643&t=9SJiSFJX3C7eAWzk-1&scaling=min-zoom&content-scaling=fixed&page-id=150%3A2&starting-point-node-id=746%3A6222",
+
+  "global": {
+    "fontFamily": "Inter",
+    "sidebar": {
+      "width": 270,
+      "background": "#FFFFFF",
+      "borderRight": "1px solid #E5E7EB",
+      "layout": {
+        "display": "flex flex-col",
+        "height": "100%"
+      },
+      "topSection": {
+        "paddingTop": 16,
+        "paddingBottom": 12,
+        "gap": 16,
+        "borderBottom": "1px solid #E5E7EB",
+        "contains": ["logo", "search", "portalManagement"]
+      },
+      "logo": {
+        "width": 110,
+        "height": 44,
+        "padding": "0 16px",
+        "objectFit": "contain"
+      },
+      "search": {
+        "width": 238,
+        "height": 36,
+        "padding": "8px 12px 8px 36px",
+        "margin": "0 16px",
+        "borderRadius": 6,
+        "border": "1px solid #D1D5DB",
+        "background": "#FFFFFF",
+        "placeholder": "Find anything",
+        "fontSize": 13,
+        "fontWeight": 400,
+        "placeholderColor": "#9CA3AF",
+        "icon": { "component": "Search", "size": 14, "color": "#9CA3AF", "position": "left 12px center" }
+      },
+      "sectionLabel": {
+        "fontSize": 11,
+        "fontWeight": 800,
+        "color": "#6B7280",
+        "textTransform": "uppercase",
+        "lineHeight": "100%",
+        "letterSpacing": "0.05em",
+        "padding": "0 16px"
+      },
+      "portalManagement": {
+        "gap": 8,
+        "label": "PORTAL MANAGEMENT",
+        "items": [
+          { "label": "Dashboard", "icon": "LayoutDashboard" },
+          { "label": "Reports", "icon": "BarChart3" },
+          { "label": "Company Management", "icon": "Building2" },
+          { "label": "User Management", "icon": "Users" },
+          { "label": "Billing", "icon": "CreditCard" }
+        ]
+      },
+      "navItem": {
+        "padding": "6px 16px",
+        "gap": 10,
+        "fontSize": 13,
+        "fontWeight": 400,
+        "lineHeight": "150%",
+        "color": "#4B5563",
+        "iconSize": 16,
+        "iconColor": "#6B7280",
+        "hoverBackground": "#F3F4F6",
+        "borderRadius": 6
+      },
+      "appsSection": {
+        "paddingTop": 16,
+        "paddingBottom": 24,
+        "gap": 8,
+        "borderBottom": "1px solid #E5E7EB",
+        "label": "APPS"
+      },
+      "appItem": {
+        "padding": "6px 16px",
+        "gap": 10,
+        "fontSize": 14,
+        "fontWeight": 400,
+        "lineHeight": "150%",
+        "color": "#4B5563",
+        "borderRadius": 6,
+        "iconContainer": {
+          "width": 28,
+          "height": 28,
+          "borderRadius": 99,
+          "padding": 4,
+          "iconSize": 16,
+          "iconColor": "#FFFFFF"
+        },
+        "activeState": {
+          "fontWeight": 500,
+          "background": "var(--app-highlight)",
+          "color": "var(--app-primary)",
+          "borderRadius": 6,
+          "fullWidth": true,
+          "note": "Active highlight extends full width of sidebar content area with subtle rounding"
+        },
+        "apps": [
+          { "label": "Policies and Procedures", "icon": "FileText", "iconBg": "#6DA017", "href": "/policies/articles", "activePrefix": "/policies", "activeHighlight": "#F5F9EB", "activeTextColor": "#6DA017" },
+          { "label": "Forms", "icon": "ClipboardList", "iconBg": "#08A273" },
+          { "label": "Inspections", "icon": "ShieldCheck", "iconBg": "#337CF3" },
+          { "label": "Training", "icon": "GraduationCap", "iconBg": "#FEB836", "href": "/training/courses", "activePrefix": "/training", "activeHighlight": "#FFF8F0", "activeTextColor": "#FEB836" },
+          { "label": "Hazards", "icon": "AlertTriangle", "iconBg": "#EF4444" },
+          { "label": "Contractors", "icon": "HardHat", "iconBg": "#F97316" }
+        ]
+      },
+      "version": {
+        "position": "mt-auto (pushed to bottom)",
+        "borderTop": "1px solid #E5E7EB",
+        "padding": "16px 16px 24px 16px",
+        "line1": { "text": "Current Version", "fontSize": 11, "color": "#9CA3AF", "lineHeight": "relaxed" },
+        "line2": { "text": "v1.1.0", "fontSize": 11, "color": "#9CA3AF", "lineHeight": "relaxed" }
+      },
+      "collapseButton": {
+        "width": 24,
+        "height": 24,
+        "background": "#6D28D9",
+        "hoverBackground": "#5B21B6",
+        "color": "#FFFFFF",
+        "iconSize": 14,
+        "icon": { "collapsed": "ChevronRight", "expanded": "ChevronLeft" },
+        "borderRadius": { "topLeft": 4, "bottomLeft": 4, "topRight": 0, "bottomRight": 0 },
+        "position": "absolute bottom-24 right-0",
+        "zIndex": 10,
+        "note": "Left corners rounded only — button sits flush against the right edge of the sidebar"
+      }
+    },
+    "header": {
+      "height": 52,
+      "padding": "12px 24px",
+      "borderBottom": "1px solid #E5E7EB",
+      "breadcrumb": {
+        "fontSize": 14,
+        "color": "#6B7280",
+        "activeColor": "#374151",
+        "separatorIcon": "ChevronRight",
+        "separatorSize": 14
+      },
+      "avatar": { "width": 32, "height": 32, "borderRadius": "50%", "fontSize": 12, "fontWeight": 600 }
+    },
+    "contentArea": { "background": "#F3F4F6", "padding": "16px 24px" },
+    "table": {
+      "container": { "border": "1px solid #D1D5DB", "borderRadius": 6, "overflow": "hidden" },
+      "header": {
+        "background": "#EAECEF",
+        "height": 44,
+        "fontSize": 14,
+        "fontWeight": 600,
+        "color": "#374151",
+        "borderBottom": "1px solid #D1D5DB",
+        "cellBorderRight": "1px solid #D1D5DB",
+        "cellPadding": "10px 16px",
+        "sortIconColor": "#9CA3AF",
+        "sortIconSize": 14
+      },
+      "row": {
+        "height": 52,
+        "fontSize": 14,
+        "color": "#4B5563",
+        "borderBottom": "1px solid #F3F4F6",
+        "cellBorderRight": "1px solid #E5E7EB",
+        "cellPadding": "12px 16px",
+        "checkboxColumn": { "width": 50, "padding": "0" },
+        "dragHandleColumn": { "width": 40 }
+      },
+      "rowHover": {
+        "borderLeft": "3px solid var(--app-primary)",
+        "background": "var(--app-row-hover-bg)",
+        "textColor": "var(--app-primary)",
+        "borderBottom": "dashed 2px var(--app-primary)"
+      },
+      "pagination": { "marginTop": 16 }
+    },
+    "controls": {
+      "showRow": { "fontSize": 14, "color": "#4B5563", "selectWidth": 65, "selectHeight": 32 },
+      "filtersButton": { "variant": "outline", "height": 36, "fontSize": 14, "borderRadius": 6, "iconSize": 16 },
+      "searchInput": { "height": 36, "fontSize": 14, "iconSize": 14, "border": "1px solid #D1D5DB", "borderRadius": 6, "paddingLeft": 36 },
+      "addButton": { "height": 36, "fontSize": 14, "borderRadius": 6, "iconSize": 16 }
+    },
+    "pageInfoBanner": {
+      "title": { "fontSize": 18, "fontWeight": 600, "color": "#374151" },
+      "subtitle": { "fontSize": 14, "fontWeight": 400, "color": "#6B7280" }
+    },
+    "dialogs": {
+      "overlay": "bg-black/50",
+      "container": {
+        "background": "#FFFFFF",
+        "borderRadius": 12,
+        "padding": 0,
+        "shadow": "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+      },
+      "header": {
+        "padding": "20px 24px",
+        "fontSize": 16,
+        "fontWeight": 600,
+        "color": "#374151",
+        "borderBottom": "1px solid #E5E7EB",
+        "closeButton": { "size": 20, "color": "#6B7280" }
+      },
+      "body": { "padding": "20px 24px" },
+      "footer": {
+        "padding": "16px 24px",
+        "borderTop": "1px solid #E5E7EB",
+        "gap": 12,
+        "layout": "flex justify-end"
+      },
+      "cancelButton": {
+        "height": 40,
+        "fontSize": 14,
+        "border": "1px solid #D1D5DB",
+        "borderRadius": 6,
+        "color": "#374151",
+        "background": "#FFFFFF",
+        "minWidth": 120
+      },
+      "confirmButton": {
+        "height": 40,
+        "fontSize": 14,
+        "borderRadius": 6,
+        "color": "#FFFFFF",
+        "background": "var(--app-primary)",
+        "minWidth": 140
+      },
+      "warningIcon": { "component": "AlertTriangle", "color": "#F59E0B", "size": 20 },
+      "infoIcon": { "component": "Info", "color": "var(--app-primary)", "size": 20 }
+    },
+    "dropdownMenu": {
+      "container": {
+        "background": "#FFFFFF",
+        "borderRadius": 8,
+        "border": "1px solid #E5E7EB",
+        "shadow": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+        "padding": "4px 0"
+      },
+      "item": {
+        "padding": "8px 16px",
+        "fontSize": 14,
+        "color": "#374151",
+        "gap": 10,
+        "iconSize": 16,
+        "hoverBackground": "#F9FAFB"
+      }
+    },
+    "filterPopover": {
+      "width": 420,
+      "header": {
+        "layout": "flex justify-between",
+        "resetButton": {
+          "fontSize": 14,
+          "fontWeight": 500,
+          "border": "1px solid var(--app-primary)",
+          "borderRadius": 6,
+          "color": "var(--app-primary)",
+          "padding": "8px 16px"
+        },
+        "cancelButton": {
+          "fontSize": 14,
+          "fontWeight": 500,
+          "border": "1px solid #E5E7EB",
+          "borderRadius": 6,
+          "color": "var(--app-primary)",
+          "padding": "8px 24px"
+        },
+        "applyButton": {
+          "fontSize": 14,
+          "fontWeight": 500,
+          "borderRadius": 6,
+          "color": "#FFFFFF",
+          "background": "var(--app-primary)",
+          "padding": "8px 24px"
+        }
+      },
+      "field": {
+        "labelFontSize": 14,
+        "labelFontWeight": 600,
+        "labelColor": "#374151",
+        "marginBottom": 8
+      }
+    },
+    "checkboxDropdown": {
+      "searchInput": { "height": 36, "placeholder": "Search Category", "iconSize": 14 },
+      "selectAllRow": { "fontWeight": 400, "fontSize": 14, "color": "#374151", "padding": "8px 12px" },
+      "item": {
+        "padding": "8px 12px",
+        "fontSize": 14,
+        "color": "#374151",
+        "checkedColor": "var(--app-primary)",
+        "checkboxSize": 20,
+        "checkedBackground": "var(--app-primary)"
+      }
+    },
+    "tooltips": {
+      "suspended": {
+        "background": "#F9FAFB",
+        "borderRadius": 6,
+        "padding": "12px 16px",
+        "title": { "fontSize": 14, "fontWeight": 600, "color": "#374151" },
+        "description": { "fontSize": 13, "color": "#6B7280" }
+      }
+    }
+  },
+
+  "modules": {
+    "training": {
+      "primaryColor": "#FEB836",
+      "hoverBg": "#FFF8EB",
+      "highlightBg": "#FEB8361A",
+      "iconBg": "#FEB836",
+      "sidebarActiveText": "#FEB836",
+      "sidebarActiveBg": "#FFF8F0",
+      "tabStyle": "dropdown",
+      "tabs": {
+        "activeBackground": "#FFF7ED",
+        "activeColor": "#FEB836",
+        "inactiveColor": "#6B7280"
+      },
+      "rowHoverBg": "#FFF8EB",
+      "rowHoverBorderColor": "#FEB836"
+    },
+    "policiesAndProcedures": {
+      "primaryColor": "#6DA017",
+      "hoverBg": "#F5F9EB",
+      "highlightBg": "#6DA0171A",
+      "iconBg": "#6DA017",
+      "sidebarActiveText": "#6DA017",
+      "sidebarActiveBg": "#F5F9EB",
+      "tabStyle": "underline",
+      "tabs": {
+        "items": ["Articles", "Categories", "Settings"],
+        "activeColor": "#6DA017",
+        "activeBorderBottom": "2px solid #6DA017",
+        "inactiveColor": "#6B7280",
+        "fontSize": 14,
+        "padding": "8px 16px"
+      },
+      "rightControls": {
+        "label": "View Policies & Procedures",
+        "toggle": true,
+        "toggleUncheckedBg": "#D1D5DB"
+      },
+      "rowHoverBg": "#F5F9EB",
+      "rowHoverBorderColor": "#6DA017",
+      "rowHoverTextColor": "#6DA017"
+    }
+  },
+
+  "pages": {
+    "policiesAndProcedures/articles": {
+      "breadcrumb": ["Policies and Procedures", "Articles", "Active Articles"],
+      "headerIcon": { "component": "FileText", "color": "#6DA017" },
+      "tabs": ["Articles", "Categories", "Settings"],
+      "activeTab": "Articles",
+      "filterBar": {
+        "filtersButton": { "variant": "outline", "color": "#6DA017" },
+        "searchPlaceholder": "Search Article by Name or Category"
+      },
+      "filtersPopover": {
+        "fields": [
+          { "label": "Article Type", "type": "checkboxDropdown", "options": ["Master", "Company", "Site"], "displayFormat": "N selected" },
+          { "label": "Category", "type": "checkboxDropdown", "hasSearch": true, "hasSelectAll": true, "options": "dynamic", "displayFormat": "N selected" }
+        ]
+      },
+      "banner": {
+        "title": "All Articles",
+        "subtitle": "Published articles currently available and in use."
+      },
+      "controls": {
+        "showResults": true,
+        "archiveButton": true,
+        "addButton": {
+          "label": "+ Add Article",
+          "color": "#6DA017",
+          "type": "dropdown",
+          "dropdownItems": [
+            { "label": "Add Master Article" },
+            { "label": "Add Company Article" },
+            { "label": "Add Site Article" }
+          ]
+        }
+      },
+      "articlesTabDropdown": {
+        "items": [
+          { "label": "All Articles", "route": "/policies/articles" },
+          { "label": "Company Articles", "route": "/policies/articles/company" },
+          { "label": "Site Articles", "route": "/policies/articles/site" },
+          { "label": "Archived Articles", "route": "/policies/articles/archived" }
+        ],
+        "width": 200,
+        "note": "Dropdown on the Articles tab in the navigation"
+      },
+      "table": {
+        "columns": [
+          { "id": "drag", "type": "dragHandle", "width": 40 },
+          { "id": "select", "type": "checkbox", "width": 50 },
+          { "id": "id", "header": "ID", "sortable": true, "width": 70 },
+          { "id": "name", "header": "Article Name", "sortable": true },
+          { "id": "articleType", "header": "Article Type", "sortable": true, "width": 150, "values": ["Company", "Master", "Site"] },
+          { "id": "category", "header": "Category", "sortable": true },
+          { "id": "actions", "header": "Actions", "width": 80, "align": "center" }
+        ],
+        "rowTypes": {
+          "companyArticle": {
+            "hasDragHandle": true,
+            "hasCheckbox": true,
+            "actionMenu": ["View Article", "Edit Article", "Revert Article", "Duplicate Article", "Archive Article", "Viewing Permission", "Review History", "View QR Code", "Copy Link"]
+          },
+          "masterArticle": {
+            "hasDragHandle": true,
+            "hasCheckbox": true,
+            "actionMenu": ["View Article", "Edit Article", "Viewing Permission", "View QR Code", "Archive Article", "Copy Link"],
+            "editConfirmation": {
+              "dialog": "makeArticleLocal",
+              "note": "Editing a Master article prompts to make it Local first"
+            }
+          },
+          "siteArticle": {
+            "hasDragHandle": false,
+            "hasCheckbox": true,
+            "actionMenu": ["View Article", "View QR Code", "Copy Link"],
+            "suspendedTooltip": "Article Suspended — You cannot access this local site article because the site it belongs to is suspended. Activate the site to access the article."
+          }
+        },
+        "siteArticleColumns": {
+          "note": "Site articles show a Location column instead of Article Type",
+          "columns": ["checkbox", "id", "name", "location", "category", "actions"],
+          "locationValues": "dynamic (e.g. Victoria, Melbourne, South Wales, Canberra)"
+        }
+      }
+    },
+    "policiesAndProcedures/articles/company": {
+      "breadcrumb": ["Policies and Procedures", "Articles", "Company Articles"],
+      "route": "/policies/articles/company",
+      "banner": {
+        "title": "Company Articles",
+        "subtitle": "Articles created and managed at the company level."
+      },
+      "table": {
+        "columns": [
+          { "id": "drag", "type": "dragHandle", "width": 40 },
+          { "id": "select", "type": "checkbox", "width": 50 },
+          { "id": "id", "header": "ID", "sortable": true, "width": 70 },
+          { "id": "name", "header": "Article Name", "sortable": true },
+          { "id": "category", "header": "Category", "sortable": true },
+          { "id": "actions", "header": "Actions", "width": 80, "align": "center" }
+        ],
+        "note": "Filters MOCK_ARTICLES where articleType === 'Company'. No Article Type column shown."
+      }
+    },
+    "policiesAndProcedures/articles/site": {
+      "breadcrumb": ["Policies and Procedures", "Articles", "Site Articles"],
+      "route": "/policies/articles/site",
+      "banner": {
+        "title": "Site Articles",
+        "subtitle": "Articles specific to individual sites."
+      },
+      "table": {
+        "columns": [
+          { "id": "drag", "type": "dragHandle", "width": 40 },
+          { "id": "select", "type": "checkbox", "width": 50 },
+          { "id": "id", "header": "ID", "sortable": true, "width": 70 },
+          { "id": "name", "header": "Article Name", "sortable": true },
+          { "id": "category", "header": "Category", "sortable": true },
+          { "id": "actions", "header": "Actions", "width": 80, "align": "center" }
+        ],
+        "note": "Filters MOCK_ARTICLES where articleType === 'Site'. No Article Type column shown."
+      }
+    },
+    "policiesAndProcedures/articles/archived": {
+      "breadcrumb": ["Policies and Procedures", "Articles", "Archived Articles"],
+      "table": {
+        "columns": [
+          { "id": "drag", "type": "dragHandle", "width": 40 },
+          { "id": "select", "type": "checkbox", "width": 50 },
+          { "id": "id", "header": "ID", "width": 70 },
+          { "id": "name", "header": "Article Name" },
+          { "id": "archivedAt", "header": "Date Archived", "sortable": true, "format": "MMMM dd, yyyy HH:mm a" },
+          { "id": "actions", "header": "Actions", "width": 80 }
+        ],
+        "actionMenu": ["Restore Article"],
+        "restoreDialog": {
+          "condition": "if article's category is inactive/archived",
+          "title": "Restore Article",
+          "message": "The current category for {articleName} article is currently inactive or archived. To continue, please choose an active category to transfer this article.",
+          "fields": [{ "label": "Select Category", "type": "dropdown", "placeholder": "Select Category" }],
+          "buttons": ["Cancel", "Transfer and Restore"]
+        }
+      }
+    },
+    "policiesAndProcedures/categories": {
+      "breadcrumb": ["Policies and Procedures", "Categories", "Active Categories"],
+      "categoriesDropdown": {
+        "items": ["Active Categories", "Archived Categories"]
+      },
+      "filtersPopover": {
+        "fields": [
+          { "label": "User Permissions", "type": "checkboxDropdown", "hasSearch": true, "hasSelectAll": true, "displayFormat": "N selected" },
+          { "label": "Category Type", "type": "checkboxDropdown", "displayFormat": "N selected" }
+        ]
+      },
+      "table": {
+        "columns": [
+          { "id": "drag", "type": "dragHandle", "width": 40 },
+          { "id": "select", "type": "checkbox", "width": 50 },
+          { "id": "id", "header": "ID", "sortable": true, "width": 70 },
+          { "id": "name", "header": "Category Name", "sortable": true },
+          { "id": "actions", "header": "Actions", "width": 80 }
+        ],
+        "actionMenu": ["Edit Category", "Archive Category"],
+        "suspendedTooltip": "Category Suspended — You cannot access this local site category because the site it belongs to is suspended. Activate the site to access the category."
+      }
+    },
+    "policiesAndProcedures/categories/archived": {
+      "breadcrumb": ["Policies and Procedures", "Categories", "Archived Categories"],
+      "table": {
+        "columns": [
+          { "id": "drag", "type": "dragHandle", "width": 40 },
+          { "id": "select", "type": "checkbox", "width": 50 },
+          { "id": "id", "header": "ID", "width": 70 },
+          { "id": "name", "header": "Category Name" },
+          { "id": "archivedAt", "header": "Date Archived", "sortable": true },
+          { "id": "actions", "header": "Actions", "width": 80 }
+        ],
+        "actionMenu": ["Restore Category", "Delete Permanently"]
+      }
+    }
+  },
+
+  "dialogs": {
+    "archiveArticle": {
+      "title": "Archive Article",
+      "icon": { "component": "AlertTriangle", "color": "#F59E0B" },
+      "message": "Are you sure you want to archive this article?",
+      "description": "Archiving this article will move this article to Archived Articles. Are you sure you want to proceed? Selected Master Articles will not be archived.",
+      "buttons": [
+        { "label": "Cancel", "variant": "outline" },
+        { "label": "Confirm", "variant": "primary" }
+      ]
+    },
+    "archiveCategoryChoice": {
+      "title": "Archive Category",
+      "message": "{categoryName} contains {count} articles. Do you want to move all articles to another category, or archive them along with this category?",
+      "buttons": [
+        { "label": "Archive all", "variant": "outline" },
+        { "label": "Transfer Articles", "variant": "primary" }
+      ]
+    },
+    "archiveCategoryTransfer": {
+      "title": "Archive Category",
+      "message": "{categoryName} contains {count} articles. To proceed, please choose where to transfer these articles before deleting the category.",
+      "warningBanner": {
+        "background": "#FEFCE8",
+        "border": "1px solid #FEB836",
+        "borderRadius": 6,
+        "padding": "12px 16px",
+        "text": "Important: The selected category will replace the old one in all affected companies.",
+        "textColor": "#92400E",
+        "importantColor": "#B45309",
+        "importantFontWeight": 600
+      },
+      "fields": [
+        { "label": "Select Category", "type": "dropdown", "placeholder": "Select Category" }
+      ],
+      "buttons": [
+        { "label": "Cancel", "variant": "outline" },
+        { "label": "Confirm Transfer", "variant": "primary" }
+      ]
+    },
+    "makeArticleLocal": {
+      "title": "Make Article Local",
+      "icon": { "component": "Info", "color": "#6DA017" },
+      "message": "Are you sure you want to edit this article?",
+      "description": "This will change the Form Type from Master to Local.",
+      "buttons": [
+        { "label": "Cancel", "variant": "outline" },
+        { "label": "Confirm", "variant": "primary" }
+      ]
+    },
+    "permanentlyDelete": {
+      "title": "Permanently Delete",
+      "icon": { "component": "AlertTriangle", "color": "#F59E0B" },
+      "message": "Permanently Delete this Category?",
+      "description": "This will permanently delete the selected category in Archive Categories. All articles under it will also be permanently deleted. This action cannot be undone.",
+      "buttons": [
+        { "label": "Cancel", "variant": "outline" },
+        { "label": "Delete", "variant": "primary" }
+      ]
+    },
+    "restoreCategory": {
+      "title": "Restore Category",
+      "icon": { "component": "Info", "color": "#6DA017" },
+      "message": "Restore selected category?",
+      "description": "Are you sure you want to restore the selected category? All articles under it will also be restore.",
+      "buttons": [
+        { "label": "Cancel", "variant": "outline" },
+        { "label": "Restore", "variant": "primary" }
+      ]
+    },
+    "restoreArticle": {
+      "title": "Restore Article",
+      "message": "The current category for {articleName} article is currently inactive or archived. To continue, please choose an active category to transfer this article.",
+      "fields": [
+        { "label": "Select Category", "type": "dropdown", "placeholder": "Select Category" }
+      ],
+      "buttons": [
+        { "label": "Cancel", "variant": "outline" },
+        { "label": "Transfer and Restore", "variant": "primary" }
+      ]
+    },
+    "revertArticleConfirm": {
+      "title": "Revert Article",
+      "message": "Are you sure you want to revert this article to {date} version?",
+      "buttons": [
+        { "label": "Cancel", "variant": "outline" },
+        { "label": "Revert", "variant": "primary" }
+      ]
+    },
+    "revertArticle": {
+      "title": "Revert Article",
+      "description": "To revert an article, pick a date and click Confirm to go back to that version.",
+      "confirmBold": true,
+      "desktopView": {
+        "table": {
+          "columns": [
+            { "id": "author", "header": "Author", "sortable": true },
+            { "id": "dateModified", "header": "Date Modified", "sortable": true, "format": "MMMM dd, yyyy - h:mm a" },
+            { "id": "action", "header": "Action", "type": "button" }
+          ],
+          "actionButton": {
+            "label": "Revert",
+            "background": "#6DA017",
+            "color": "#FFFFFF",
+            "borderRadius": 6,
+            "fontSize": 13,
+            "padding": "4px 16px",
+            "variants": ["Revert", "Approve", "Review", "Submit"]
+          }
+        }
+      },
+      "mobileView": {
+        "cardLayout": {
+          "headerFields": ["authorName", "actionButton"],
+          "bodyFields": [
+            { "label": "Date Modified", "value": "dynamic" }
+          ],
+          "actionButton": {
+            "variants": ["Revert", "Approve", "Review", "Submit"],
+            "background": "#6DA017",
+            "color": "#FFFFFF",
+            "borderRadius": 6,
+            "padding": "4px 16px"
+          }
+        }
+      }
+    },
+    "reviewHistory": {
+      "title": "Review History",
+      "desktopView": {
+        "table": {
+          "columns": [
+            { "id": "reviewer", "header": "Reviewer", "sortable": true },
+            { "id": "scheduleDate", "header": "Schedule Date", "sortable": true, "format": "yyyy-MM-dd" },
+            { "id": "status", "header": "Status", "sortable": true, "values": ["Completed", "Not Completed", "Pending"] },
+            { "id": "completionDate", "header": "Completion Date", "sortable": true, "format": "yyyy-MM-dd" },
+            { "id": "comment", "header": "Comment", "sortable": true, "truncated": true, "clickToExpand": true }
+          ],
+          "statusColors": {
+            "Completed": { "dotColor": "#22C55E", "textColor": "#374151" },
+            "Not Completed": { "dotColor": "#6B7280", "textColor": "#374151" },
+            "Pending": { "dotColor": "#EAB308", "textColor": "#374151" }
+          }
+        }
+      },
+      "mobileView": {
+        "cardLayout": {
+          "headerFields": ["reviewerName", "statusBadge"],
+          "bodyFields": [
+            { "label": "Schedule Date", "value": "dynamic" },
+            { "label": "Completion Date", "value": "dynamic" },
+            { "label": "Comment", "value": "dynamic", "truncated": true }
+          ],
+          "statusBadge": {
+            "Completed": { "dotColor": "#22C55E", "textColor": "#374151" },
+            "Pending": { "dotColor": "#EAB308", "textColor": "#374151" }
+          }
+        }
+      }
+    },
+    "fullComment": {
+      "title": "{authorName}'s comment",
+      "body": { "fontSize": 14, "color": "#374151", "lineHeight": 1.6 }
+    },
+    "viewingPermissions": {
+      "title": "Viewing Permissions",
+      "desktopView": {
+        "layout": "horizontal",
+        "items": [
+          { "label": "Site Admins", "type": "checkbox" },
+          { "label": "Staff Users", "type": "checkbox" }
+        ],
+        "itemStyle": {
+          "border": "1px solid #E5E7EB",
+          "borderRadius": 8,
+          "padding": "12px 16px",
+          "gap": 12,
+          "checkedBorder": "1px solid var(--app-primary)",
+          "checkedBackground": "var(--app-highlight)",
+          "checkboxSize": 20,
+          "checkedCheckboxBg": "var(--app-primary)"
+        }
+      },
+      "mobileView": {
+        "layout": "vertical",
+        "note": "Same items stacked vertically"
+      },
+      "buttons": [
+        { "label": "Cancel", "variant": "outline", "fullWidth": true },
+        { "label": "Save Changes", "variant": "primary", "fullWidth": true }
+      ]
+    },
+    "qrCode": {
+      "title": null,
+      "container": { "padding": 24, "borderRadius": 12, "textAlign": "center" },
+      "qrImage": { "width": 200, "height": 200, "margin": "0 auto 16px" },
+      "downloadButton": {
+        "label": "Download QR",
+        "icon": "Download",
+        "background": "#6DA017",
+        "color": "#FFFFFF",
+        "borderRadius": 6,
+        "fullWidth": true,
+        "height": 40
+      }
+    }
+  },
+
+  "rowStates": {
+    "default": {
+      "background": "#FFFFFF",
+      "textColor": "#4B5563",
+      "borderLeft": "none"
+    },
+    "hover": {
+      "background": "var(--app-row-hover-bg)",
+      "textColor": "var(--app-primary)",
+      "borderLeft": "3px solid var(--app-primary)",
+      "borderBottom": "dashed 2px var(--app-primary)"
+    },
+    "suspended": {
+      "opacity": 0.6,
+      "cursor": "not-allowed",
+      "tooltip": "Suspended — Cannot access because the site it belongs to is suspended."
+    }
+  },
+
+  "mobileComponents": {
+    "revertArticleCard": {
+      "header": {
+        "authorName": { "fontSize": 14, "fontWeight": 600, "color": "#374151" },
+        "actionButton": {
+          "background": "#6DA017",
+          "color": "#FFFFFF",
+          "borderRadius": 6,
+          "fontSize": 13,
+          "padding": "4px 16px"
+        }
+      },
+      "body": {
+        "field": {
+          "labelWidth": 110,
+          "labelColor": "#6B7280",
+          "valueColor": "#374151",
+          "fontSize": 14,
+          "padding": "12px 16px",
+          "borderBottom": "1px solid #F3F4F6"
+        }
+      }
+    },
+    "reviewHistoryCard": {
+      "header": {
+        "authorName": { "fontSize": 14, "fontWeight": 600, "color": "#374151" },
+        "statusBadge": {
+          "fontSize": 14,
+          "gap": 6,
+          "dot": { "width": 8, "height": 8, "borderRadius": "50%" },
+          "completedDot": "#22C55E",
+          "pendingDot": "#EAB308"
+        }
+      },
+      "body": {
+        "field": {
+          "labelWidth": 130,
+          "labelColor": "#6B7280",
+          "valueColor": "#374151",
+          "fontSize": 14,
+          "padding": "12px 16px",
+          "borderBottom": "1px solid #F3F4F6"
+        }
+      }
+    },
+    "articleTypeDropdown": {
+      "options": ["Company", "Site"],
+      "note": "Mobile dropdown for creating/filtering articles by type"
+    }
+  }
+}
