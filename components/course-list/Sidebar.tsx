@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import {
   Search,
@@ -62,13 +61,13 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
       <div className="flex flex-col pt-3 pb-4 gap-5 border-b border-gray-200">
         {/* Logo */}
         <div className="px-4">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src="/logo.png"
             alt="Your Safety Partners"
             width={110}
             height={44}
             className="object-contain"
-            priority
           />
         </div>
 
