@@ -18,7 +18,7 @@ type CustomButtonProps = {
   isLoading?: boolean;
   width?: string;
   type?: 'button' | 'submit' | 'reset';
-  buttonProps?: Record<string, any>;
+  buttonProps?: Record<string, unknown>;
   variant?: ButtonVariant;
   disabled?: boolean;
   leadingIcon?: React.ReactNode;

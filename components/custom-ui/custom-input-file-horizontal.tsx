@@ -20,7 +20,7 @@ type CustomInputFileHorizontalProps = {
   onValueChange?: (value: string) => void;
   icon?: React.ReactNode;
   disableValidation?: boolean;
-  register?: UseFormRegister<any>;
+  register?: UseFormRegister<Record<string, unknown>>;
 } & React.ComponentProps<'input'>; // This includes onChange
 
 const CustomInputFileHorizontal: React.FC<CustomInputFileHorizontalProps> = ({

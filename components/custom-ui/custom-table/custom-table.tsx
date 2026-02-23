@@ -108,7 +108,8 @@ export function CustomTable<TData>({
                 const isActionsColumn = header.column.id === 'actions';
                 const isSelectColumn = header.column.id === 'select';
                 const hasDropdown = header.column.id === 'site';
-                const alignmentClass = isActionsColumn ? 'text-center' : '';
+                const alignmentClass =
+                  isActionsColumn || isSelectColumn ? 'text-center align-middle' : '';
 
                 return (
                   <TableHead
@@ -117,7 +118,7 @@ export function CustomTable<TData>({
                     style={{
                       width: (header.column.columnDef.meta as ColumnMeta)
                         ?.width,
-                      textAlign: isActionsColumn ? 'center' : undefined,
+                      textAlign: isActionsColumn || isSelectColumn ? 'center' : undefined,
                       paddingLeft:
                         isActionsColumn || hasDropdown || isSelectColumn ? undefined : '16px',
                       overflow:
@@ -142,7 +143,7 @@ export function CustomTable<TData>({
                   >
                     {header.isPlaceholder ? null : (
                       <div
-                        className={`flex items-center ${isActionsColumn ? 'justify-center' : ''} gap-1 ${!isActionsColumn ? 'cursor-pointer select-none' : ''} font-semibold`}
+                        className={`flex items-center ${isActionsColumn || isSelectColumn ? 'justify-center' : ''} gap-1 ${!isActionsColumn ? 'cursor-pointer select-none' : ''} font-semibold`}
                         onClick={
                           !isActionsColumn
                             ? header.column.getToggleSortingHandler()
@@ -170,8 +171,9 @@ export function CustomTable<TData>({
                         )}
                         {!isActionsColumn && header.column.getCanSort() && (
                           <ArrowUpDownIcon
-                            size={14}
-                            className="text-[var(--text-primary)] ml-1"
+                            size={12}
+                            strokeWidth={2}
+                            className="text-[var(--text-primary)] ml-2.5 shrink-0"
                           />
                         )}
                       </div>
@@ -212,7 +214,7 @@ export function CustomTable<TData>({
                           style={{
                             width: (header.column.columnDef.meta as ColumnMeta)
                               ?.width,
-                            textAlign: isActionsColumn ? 'center' : undefined,
+                            textAlign: isActionsColumn || isSelectColumn ? 'center' : undefined,
                             paddingLeft:
                               isActionsColumn || hasDropdown || isSelectColumn
                                 ? undefined
@@ -290,9 +292,10 @@ export function CustomTable<TData>({
                       const isActionsColumn = cell.column.id === 'actions';
                       const isSelectColumn = cell.column.id === 'select';
                       const hasDropdown = cell.column.id === 'site';
-                      const alignmentClass = isActionsColumn
-                        ? 'text-center align-middle'
-                        : '';
+                      const alignmentClass =
+                        isActionsColumn || isSelectColumn
+                          ? 'text-center align-middle'
+                          : '';
 
                       return (
                         <TableCell
@@ -301,7 +304,7 @@ export function CustomTable<TData>({
                           style={{
                             width: (cell.column.columnDef.meta as ColumnMeta)
                               ?.width,
-                            textAlign: isActionsColumn ? 'center' : undefined,
+                            textAlign: isActionsColumn || isSelectColumn ? 'center' : undefined,
                             paddingLeft:
                               isActionsColumn || hasDropdown || isSelectColumn
                                 ? undefined

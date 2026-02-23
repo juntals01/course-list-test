@@ -151,28 +151,29 @@ export default function ArchivedArticlesPage() {
 
   return (
     <>
-      {/* Search row — no Filters button for archived view */}
-      <div className="px-4 md:px-6 py-3 border-b border-gray-200">
+      {/* Search row — full width, h-37, placeholder #9CA3AF */}
+      <div className="px-4 md:px-6 py-3 border-b border-gray-200 w-full">
         <div
           className={cn(
-            'relative rounded-md border border-[var(--table-border)] transition-all duration-200 ease-in-out',
+            'relative w-full rounded-md border border-[var(--table-border)] transition-all duration-200 ease-in-out h-[37px]',
             Glowing(APPS.POLICIES_AND_PROCEDURES).inputBox
           )}
         >
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-            <SearchIcon size={14} />
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]">
+            <SearchIcon size={16} />
           </div>
           <Input
             placeholder="Search Article"
             value={globalFilter}
             onChange={(e) => setGlobalFilter(e.target.value)}
-            className="bg-white placeholder:text-gray-400 placeholder:text-sm border-none h-[36px] text-sm pl-9 shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="bg-white placeholder:text-[#9CA3AF] border-none h-[37px] text-[14px] font-normal leading-[1.5] pl-9 pr-3 shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 w-full"
           />
         </div>
       </div>
 
-      {/* Content area */}
-      <div className="flex-1 px-4 md:px-6 py-4 bg-[#F3F4F6]">
+      {/* Content area — pt-10 (40px) gap at top, px-10 on desktop */}
+      <div className="flex-1 flex flex-col gap-6 overflow-auto bg-[#F3F4F6]">
+        <div className="flex flex-col gap-3 pt-10 px-4 md:px-10">
         <PageInfoBanner
           title="Archived Articles"
           subtitle="Articles currently hidden from the main list."
@@ -233,14 +234,14 @@ export default function ArchivedArticlesPage() {
             isLoading={false}
             noResultsMessage="No archived articles found."
             skeletonRows={pagination.pageSize}
-            containerClassName="border border-[var(--table-border)] rounded-md overflow-auto"
-            headerRowClassName="bg-[#EAECEF] border-b border-gray-300"
-            headerCellClassName="text-sm font-semibold text-[#374151] bg-[#EAECEF] border-r border-gray-300 last:border-r-0 px-4 py-2.5 [&:has([role=checkbox])]:!px-0 [&>[role=checkbox]]:!translate-y-0"
-            bodyRowClassName="text-sm group transition-colors hover:bg-[#F5F9EB] hover:[&_td]:text-[var(--policiesAndProcedures-primary)] hover:shadow-[inset_3px_0_0_var(--policiesAndProcedures-primary)]"
-            bodyCellClassName="px-4 py-3 text-sm text-[#4B5563] border-r border-gray-200 last:border-r-0 border-b border-gray-100 [&:has([role=checkbox])]:!px-0 [&>[role=checkbox]]:!translate-y-0"
+            containerClassName="border border-[#D1D5DB] rounded-lg overflow-auto min-h-[600px]"
+            headerRowClassName="bg-[#E5E7EB] border-b border-[#D1D5DB] h-[60px]"
+            headerCellClassName="text-sm font-semibold text-[#374151] bg-[#E5E7EB] border-r border-[#D1D5DB] last:border-r-0 py-3 px-4 [&:has([role=checkbox])]:!p-0 [&>[role=checkbox]]:!translate-y-0 [&_.size-5]:rounded-[4px]"
+            bodyRowClassName="text-sm group transition-colors h-[54px] border-b border-[#D1D5DB] hover:bg-[#f0f6e8] hover:[&_td]:text-[#6DA017]"
+            bodyCellClassName="py-3 px-4 font-[var(--font-inter)] text-[14px] font-normal leading-[1.5] tracking-[0%] text-[#374151] border-r border-[#D1D5DB] last:border-r-0 group-hover:text-[#6DA017] group-hover:[&_*]:!text-[#6DA017] [&:has([role=checkbox])]:!p-0 [&>[role=checkbox]]:!translate-y-0"
             tableMinWidth="900px"
-            tableHeaderHeight="h-[44px]"
-            tableRowHeight="h-[52px]"
+            tableHeaderHeight="h-[60px]"
+            tableRowHeight="h-[54px]"
           />
         </div>
 
@@ -273,9 +274,10 @@ export default function ArchivedArticlesPage() {
           })}
         </div>
 
-        {table.getPageCount() > 1 && (
-          <TablePagination table={table} app={APPS.POLICIES_AND_PROCEDURES} />
-        )}
+          {table.getPageCount() > 1 && (
+            <TablePagination table={table} app={APPS.POLICIES_AND_PROCEDURES} />
+          )}
+        </div>
       </div>
     </>
   );

@@ -45,8 +45,8 @@ function DraggableTable<TData extends TDataType>({
   };
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
-    setItems(data);
+    const id = setTimeout(() => setItems(data), 0);
+    return () => clearTimeout(id);
   }, [data]);
 
   const columnsWithDragHandle: ColumnDef<TData>[] = [...columns];

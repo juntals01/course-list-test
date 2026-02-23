@@ -7,7 +7,7 @@ export default function AllArticlesPage() {
   return (
     <ArticlesTableView
       data={MOCK_ARTICLES}
-      title="All Articles"
+      title="All Master Articles"
       subtitle="Published articles currently available and in use."
       showArticleType={true}
     />

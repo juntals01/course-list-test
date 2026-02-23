@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import {
   useReactTable,
   getCoreRowModel,
@@ -16,7 +17,6 @@ import {
 import {
   Plus,
   SearchIcon,
-  Archive,
   GripVertical,
   ArrowUpDown,
   Pencil,
@@ -59,45 +59,45 @@ function getArticleColumns(showArticleType: boolean, onEdit?: (id: number) => vo
       header: () => null,
       cell: ({ row }) =>
         row.original.hasDragHandle ? (
-          <div className="flex items-center justify-center w-full text-gray-400 cursor-grab">
-            <GripVertical size={16} />
+          <div className="flex w-full items-center justify-center cursor-grab min-h-[54px]">
+            <GripVertical size={24} className="shrink-0 text-[#6DA017]" />
           </div>
         ) : null,
       enableSorting: false,
-      meta: { width: '40px', headerClassName: '!px-0', cellClassName: '!px-0' },
+      meta: { width: '80px', headerClassName: '!px-0', cellClassName: '!px-0' },
     },
     {
       id: 'select',
       header: ({ table }) => (
-        <div className="flex items-center justify-center w-full">
+        <div className="w-full min-h-9 flex items-center justify-center gap-2 rounded-[4px] p-2">
           <Checkbox
             checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
             onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
             aria-label="Select all"
-            className="border-gray-300 data-[state=checked]:bg-[var(--policiesAndProcedures-primary)] data-[state=checked]:border-[var(--policiesAndProcedures-primary)]"
+            className="size-5 rounded-[4px] border border-[#D1D5DB] bg-[#F9FAFB] data-[state=checked]:bg-[var(--policiesAndProcedures-primary)] data-[state=checked]:border-[var(--policiesAndProcedures-primary)]"
           />
         </div>
       ),
       cell: ({ row }) => (
-        <div className="flex items-center justify-center w-full">
+        <div className="w-full min-h-9 flex items-center justify-center gap-2 rounded-[4px] p-2">
           <Checkbox
             checked={row.getIsSelected()}
             onCheckedChange={(value) => row.toggleSelected(!!value)}
             aria-label="Select row"
-            className="border-gray-300 data-[state=checked]:bg-[var(--policiesAndProcedures-primary)] data-[state=checked]:border-[var(--policiesAndProcedures-primary)]"
+            className="size-5 rounded-[4px] border border-[#D1D5DB] bg-[#F9FAFB] data-[state=checked]:bg-[var(--policiesAndProcedures-primary)] data-[state=checked]:border-[var(--policiesAndProcedures-primary)]"
           />
         </div>
       ),
       enableSorting: false,
-      meta: { width: '50px', headerClassName: '!pl-0 !pr-0', cellClassName: '!pl-0 !pr-0' },
+      meta: { width: '68px', headerClassName: '!pl-0 !pr-0', cellClassName: '!pl-0 !pr-0' },
     },
     {
       accessorKey: 'id',
       header: 'ID',
       enableSorting: true,
-      meta: { width: '70px' },
+      meta: { width: '140px' },
       cell: ({ row }) => (
-        <span className="text-[#4B5563]">
+        <span className="text-[14px] font-normal leading-[1.5] text-[#374151]">
           {String(row.original.id).padStart(3, '0')}
         </span>
       ),
@@ -106,7 +106,10 @@ function getArticleColumns(showArticleType: boolean, onEdit?: (id: number) => vo
       accessorKey: 'name',
       header: 'Article Name',
       enableSorting: true,
-      cell: ({ row }) => <span className="text-[#374151]">{row.original.name}</span>,
+      meta: { cellClassName: 'group-hover:shadow-[inset_1px_0_0_0_#6DA017]' },
+      cell: ({ row }) => (
+        <span className="text-[14px] font-normal leading-[1.5] text-[#374151]">{row.original.name}</span>
+      ),
     },
   ];
 
@@ -115,8 +118,10 @@ function getArticleColumns(showArticleType: boolean, onEdit?: (id: number) => vo
       accessorKey: 'articleType',
       header: 'Article Type',
       enableSorting: true,
-      meta: { width: '150px' },
-      cell: ({ row }) => <span className="text-[#4B5563]">{row.original.articleType}</span>,
+      meta: { width: '150px', cellClassName: 'group-hover:shadow-[inset_1px_0_0_0_#6DA017]' },
+      cell: ({ row }) => (
+        <span className="text-[14px] font-normal leading-[1.5] text-[#374151]">{row.original.articleType}</span>
+      ),
     });
   }
 
@@ -125,12 +130,15 @@ function getArticleColumns(showArticleType: boolean, onEdit?: (id: number) => vo
       accessorKey: 'category',
       header: 'Category',
       enableSorting: true,
-      cell: ({ row }) => <span className="text-[#4B5563]">{row.original.category}</span>,
+      meta: { cellClassName: 'group-hover:shadow-[inset_1px_0_0_0_#6DA017]' },
+      cell: ({ row }) => (
+        <span className="text-[14px] font-normal leading-[1.5] text-[#374151]">{row.original.category}</span>
+      ),
     },
     {
       id: 'actions',
       header: () => <div className="text-center">Actions</div>,
-      meta: { width: '80px' },
+      meta: { width: '80px', cellClassName: 'group-hover:shadow-[inset_1px_0_0_0_#6DA017]' },
       cell: ({ row }) => (
         <div className="flex justify-center">
           <RowActionMenu
@@ -171,8 +179,8 @@ export default function ArticlesTableView({
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
   const [globalFilter, setGlobalFilter] = useState('');
 
-  const handleEdit = (id: number) => router.push(`/policies/articles/${id}/edit`);
-  const columns = useMemo(() => getArticleColumns(showArticleType, handleEdit), [showArticleType]);
+  const handleEdit = useCallback((id: number) => router.push(`/policies/articles/${id}/edit`), [router]);
+  const columns = useMemo(() => getArticleColumns(showArticleType, handleEdit), [showArticleType, handleEdit]);
 
   const table = useReactTable({
     data,
@@ -193,35 +201,37 @@ export default function ArticlesTableView({
 
   return (
     <>
-      {/* Filter + Search row */}
-      <div className="px-4 md:px-6 py-3 border-b border-gray-200">
-        <div className="flex items-center gap-3 md:gap-5">
+      {/* Filter container — h-73, rounded-t 4px, border-b 1px #E5E7EB, py-4 px-6, gap-4 */}
+      <div className="w-full min-h-[73px] flex flex-col justify-center py-4 px-6 border-b border-[#E5E7EB] rounded-tl-[4px] rounded-tr-[4px]">
+        <div className="flex items-center gap-4 w-full">
           <FiltersPopover app={APPS.POLICIES_AND_PROCEDURES} />
           <div
             className={cn(
-              'relative flex-1 rounded-md border border-[var(--table-border)] transition-all duration-200 ease-in-out',
+              'relative flex-1 min-w-0 w-full rounded-md border border-[#E5E7EB] box-border transition-all duration-200 ease-in-out flex items-center overflow-hidden',
               Glowing(APPS.POLICIES_AND_PROCEDURES).inputBox
             )}
+            style={{ height: 37 }}
           >
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              <SearchIcon size={14} />
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none">
+              <SearchIcon size={16} />
             </div>
             <Input
-              placeholder="Search Article by Name or Category"
+              placeholder="Search Article"
               value={globalFilter}
               onChange={(e) => setGlobalFilter(e.target.value)}
-              className="bg-white placeholder:text-gray-400 placeholder:text-sm border-none h-[36px] text-sm pl-9 shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="bg-white placeholder:text-[#9CA3AF] border-none h-full min-h-0 text-[14px] font-normal leading-[1.5] pl-9 pr-3 shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-md"
             />
           </div>
         </div>
       </div>
 
-      {/* Content area */}
-      <div className="flex-1 px-4 md:px-6 py-4 bg-[#F3F4F6]">
-        <PageInfoBanner title={title} subtitle={subtitle} />
+      {/* Content area — outer gap 24px, inner gap 12px; top gap above "All Master Articles" */}
+      <div className="flex-1 flex flex-col gap-6 overflow-auto bg-[#F3F4F6]">
+        <div className="flex flex-col gap-3 pt-10 px-4 md:px-10">
+          <PageInfoBanner title={title} subtitle={subtitle} />
 
-        {/* Add button - full width on mobile */}
-        <div className="mt-4 md:hidden">
+          {/* Add button - full width on mobile */}
+          <div className="md:hidden">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div>
@@ -240,90 +250,87 @@ export default function ArticlesTableView({
               <DropdownMenuItem className="text-sm cursor-pointer">Add Site Article</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </div>
+          </div>
 
-        {/* Controls row */}
-        <div className="flex items-center justify-between mt-4 md:mt-8 mb-4">
-          <div className="flex items-center gap-3 text-sm text-[#4B5563]">
+          {/* Controls row — h-45 gap-2; show/results h-37 gap-2.5 border-r pr-6; dropdown 54x37; buttons Copy From Company + Add Master Article */}
+          <div className="flex items-center justify-between h-[45px] gap-2 mb-4">
             <div className="flex items-center gap-2">
-              <span className="hidden md:inline">Show</span>
-              <Select
-                value={String(pagination.pageSize)}
-                onValueChange={(val) => table.setPageSize(Number(val))}
+              {/* Show until results — w-218 h-37 gap-2.5 border-r pr-6 */}
+              <div className="flex items-center gap-2.5 h-[37px] pr-6 border-r border-gray-200">
+                <span className="text-[14px] font-normal leading-[1.5] text-[#374151]">Show</span>
+                <Select
+                  value={String(pagination.pageSize)}
+                  onValueChange={(val) => table.setPageSize(Number(val))}
+                >
+                  <SelectTrigger className="h-[37px] w-[54px] rounded-[4px] p-2 border border-gray-300 bg-white text-[14px] font-medium leading-[1.5] [&>svg]:size-[14px]">
+                    <SelectValue placeholder={pagination.pageSize} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[10, 20, 30, 50].map((size) => (
+                      <SelectItem key={size} value={String(size)}>
+                        {size}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <span className="text-[14px] font-normal leading-[1.5] text-[#374151]">of {table.getFilteredRowModel().rows.length} results</span>
+              </div>
+
+              {/* Archive — archive.png 14x14, text 14px 400 #374151 */}
+              <button
+                disabled={selectedCount === 0}
+                className={cn(
+                  'flex items-center gap-2 text-[14px] font-normal leading-[1.5] transition-colors',
+                  selectedCount > 0
+                    ? 'text-[#374151] hover:text-[var(--policiesAndProcedures-primary)] cursor-pointer'
+                    : 'text-gray-400 cursor-not-allowed'
+                )}
               >
-                <SelectTrigger className="h-8 w-[65px] bg-white border-gray-300 text-sm">
-                  <SelectValue placeholder={pagination.pageSize} />
-                </SelectTrigger>
-                <SelectContent>
-                  {[10, 20, 30, 50].map((size) => (
-                    <SelectItem key={size} value={String(size)}>
-                      {size}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <span className="hidden md:inline">of {table.getFilteredRowModel().rows.length} results</span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/icons/archive.png" alt="" width={14} height={14} className="shrink-0 object-contain" />
+                <span>Archive</span>
+              </button>
             </div>
 
-            <div className="h-5 w-px bg-gray-300" />
-
-            <button
-              disabled={selectedCount === 0}
-              className={cn(
-                'flex items-center gap-1.5 text-sm font-medium transition-colors',
-                selectedCount > 0
-                  ? 'text-[#4B5563] hover:text-[var(--policiesAndProcedures-primary)] cursor-pointer'
-                  : 'text-gray-400 cursor-not-allowed'
-              )}
-            >
-              <Archive size={15} />
-              <span>Archive</span>
-            </button>
+            {/* Copy From Company (secondary) + Add Master Article (primary) */}
+            <div className="flex items-center gap-2">
+              <Link
+                href="/policies/articles/company"
+                className="h-[41px] min-w-[196px] flex items-center justify-center gap-1 rounded-[6px] border border-[#6DA017] bg-white py-[10px] pl-4 pr-5 text-[14px] font-semibold leading-[1.5] text-[#6DA017] hover:bg-[#6DA0171A] transition-colors"
+              >
+                <Copy size={14} className="shrink-0" />
+                <span>Copy From Company</span>
+              </Link>
+              <Link
+                href="/policies/articles/add"
+                className="h-[41px] flex items-center justify-center gap-1 rounded-[6px] bg-[#6DA017] py-[10px] pl-4 pr-5 text-[14px] font-semibold leading-[1.5] text-white hover:bg-[#5c8f15] transition-colors"
+              >
+                <Plus size={14} className="shrink-0" />
+                <span>Add Master Article</span>
+              </Link>
+            </div>
           </div>
 
-          {/* Desktop-only add button with dropdown */}
-          <div className="hidden md:block">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div>
-                  <CustomButton
-                    title={addButtonLabel}
-                    leadingIcon={<Plus size={16} />}
-                    app={APPS.POLICIES_AND_PROCEDURES}
-                    buttonClass="h-[36px] text-sm rounded-md"
-                    width="px-4 py-2"
-                  />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[200px]">
-                <DropdownMenuItem className="text-sm cursor-pointer">Add Master Article</DropdownMenuItem>
-                <DropdownMenuItem className="text-sm cursor-pointer">Add Company Article</DropdownMenuItem>
-                <DropdownMenuItem className="text-sm cursor-pointer">Add Site Article</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-
-        {/* Desktop table */}
-        <div className="hidden md:block" style={{ '--table-background-secondary': '#F7F7F5' } as React.CSSProperties}>
+          {/* Desktop table */}
+          <div className="hidden md:block" style={{ '--table-background-secondary': '#F7F7F5' } as React.CSSProperties}>
           <CustomTable
             table={table}
             isLoading={false}
             noResultsMessage="No articles found."
             skeletonRows={pagination.pageSize}
-            containerClassName="border border-[var(--table-border)] rounded-md overflow-auto"
-            headerRowClassName="bg-[#EAECEF] border-b border-gray-300"
-            headerCellClassName="text-sm font-semibold text-[#374151] bg-[#EAECEF] border-r border-gray-300 last:border-r-0 px-4 py-2.5 [&:has([role=checkbox])]:!px-0 [&>[role=checkbox]]:!translate-y-0"
-            bodyRowClassName="text-sm group transition-colors hover:bg-[#F5F9EB] hover:[&_td]:text-[var(--policiesAndProcedures-primary)] hover:shadow-[inset_3px_0_0_var(--policiesAndProcedures-primary)]"
-            bodyCellClassName="px-4 py-3 text-sm text-[#4B5563] border-r border-gray-200 last:border-r-0 border-b border-gray-100 [&:has([role=checkbox])]:!px-0 [&>[role=checkbox]]:!translate-y-0"
+            containerClassName="border border-[#D1D5DB] rounded-lg overflow-auto min-h-[600px]"
+            headerRowClassName="bg-[#E5E7EB] border-b border-[#D1D5DB] h-[60px]"
+            headerCellClassName="text-sm font-semibold text-[#374151] bg-[#E5E7EB] border-r border-[#D1D5DB] last:border-r-0 py-3 px-4 [&:has([role=checkbox])]:!p-0 [&>[role=checkbox]]:!translate-y-0 [&_.size-5]:rounded-[4px]"
+            bodyRowClassName="text-sm group transition-colors h-[54px] border-b border-[#D1D5DB] hover:bg-[#f0f6e8] hover:[&_td]:text-[#6DA017]"
+            bodyCellClassName="py-3 px-4 font-[var(--font-inter)] text-[14px] font-normal leading-[1.5] tracking-[0%] text-[#374151] border-r border-[#D1D5DB] last:border-r-0 group-hover:text-[#6DA017] group-hover:[&_*]:!text-[#6DA017] [&:has([role=checkbox])]:!p-0 [&>[role=checkbox]]:!translate-y-0"
             tableMinWidth="900px"
-            tableHeaderHeight="h-[44px]"
-            tableRowHeight="h-[52px]"
+            tableHeaderHeight="h-[60px]"
+            tableRowHeight="h-[54px]"
           />
-        </div>
+          </div>
 
-        {/* Mobile cards */}
-        <div className="md:hidden space-y-3">
+          {/* Mobile cards */}
+          <div className="md:hidden space-y-3">
           <MobileSelectAllRow
             checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && 'indeterminate')}
             onCheckedChange={(val) => table.toggleAllPageRowsSelected(val)}
@@ -353,11 +360,12 @@ export default function ArticlesTableView({
               />
             );
           })}
-        </div>
+          </div>
 
-        {table.getPageCount() > 1 && (
-          <TablePagination table={table} app={APPS.POLICIES_AND_PROCEDURES} />
-        )}
+          {table.getPageCount() > 1 && (
+            <TablePagination table={table} app={APPS.POLICIES_AND_PROCEDURES} />
+          )}
+        </div>
       </div>
     </>
   );

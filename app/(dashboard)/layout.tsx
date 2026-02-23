@@ -3,12 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   GraduationCap,
-  FileText,
   ChevronRight,
-  Grid3X3,
-  HelpCircle,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -32,14 +30,22 @@ function getModuleConfig(pathname: string): ModuleConfig {
   if (pathname.startsWith('/policies')) {
     return {
       name: 'Policies and Procedures',
-      icon: <FileText size={12} />,
-      iconBg: 'bg-[var(--policiesAndProcedures-primary)]',
+      icon: (
+        <Image
+          src="/icons/policies-sidebar.png"
+          alt=""
+          width={20}
+          height={20}
+          className="object-contain"
+        />
+      ),
+      iconBg: 'bg-[#F3F7EB]',
       avatarBg: 'bg-[var(--policiesAndProcedures-primary)]',
     };
   }
   return {
     name: 'Training',
-    icon: <GraduationCap size={12} />,
+    icon: <GraduationCap size={20} className="text-white" />,
     iconBg: 'bg-[var(--training-primary)]',
     avatarBg: 'bg-[#6D28D9]',
   };
@@ -47,18 +53,18 @@ function getModuleConfig(pathname: string): ModuleConfig {
 
 function getBreadcrumb(pathname: string): string[] {
   if (pathname.startsWith('/policies')) {
-    if (pathname === '/policies/articles/add') return ['Articles', 'Active Articles', 'Add Article'];
-    if (pathname.match(/^\/policies\/articles\/\d+\/edit/)) return ['Articles', 'Active Articles', 'Edit Article'];
-    if (pathname.match(/^\/policies\/articles\/\d+$/)) return ['Policies', 'Psychological Health Management'];
-    if (pathname === '/policies/articles/archived') return ['Articles', 'Archived Articles'];
-    if (pathname === '/policies/articles/company') return ['Articles', 'Company Articles'];
-    if (pathname === '/policies/articles/site') return ['Articles', 'Site Articles'];
-    if (pathname.startsWith('/policies/articles')) return ['Articles', 'All Articles'];
-    if (pathname === '/policies/categories/archived') return ['Categories', 'Archived Categories'];
-    if (pathname.startsWith('/policies/categories')) return ['Categories', 'Active Categories'];
+    if (pathname === '/policies/articles/add') return ['Master Articles', 'Active Articles', 'Add Article'];
+    if (pathname.match(/^\/policies\/articles\/\d+\/edit/)) return ['Master Articles', 'Active Articles', 'Edit Article'];
+    if (pathname.match(/^\/policies\/articles\/\d+$/)) return ['Master Articles', 'Psychological Health Management'];
+    if (pathname === '/policies/articles/archived') return ['Master Articles', 'Archived Articles'];
+    if (pathname === '/policies/articles/company') return ['Master Articles', 'Company Articles'];
+    if (pathname === '/policies/articles/site') return ['Master Articles', 'Site Articles'];
+    if (pathname.startsWith('/policies/articles')) return ['Master Articles', 'Active Articles'];
+    if (pathname === '/policies/categories/archived') return ['Master Categories', 'Archived Categories'];
+    if (pathname.startsWith('/policies/categories')) return ['Master Categories', 'Active Categories'];
     if (pathname.startsWith('/policies/settings')) return ['Settings'];
     if (pathname === '/policies/view') return ['View Policies & Procedures'];
-    return ['Articles', 'All Articles'];
+    return ['Master Articles', 'Active Articles'];
   }
 
   if (pathname.match(/^\/training\/job-roles\/\d+\/edit/)) return ['Job Roles List', 'Edit Job Role'];
@@ -145,30 +151,31 @@ function PoliciesTabs({ pathname }: { pathname: string }) {
   const router = useRouter();
   const isArticles = pathname.startsWith('/policies/articles');
   const isCategories = pathname.startsWith('/policies/categories');
-  const isSettings = pathname.startsWith('/policies/settings');
   const isViewPage = pathname === '/policies/view';
+  const isCopiedArticles = pathname === '/policies/articles/company';
+  const isMasterArticlesActive = isArticles && !isCopiedArticles;
 
-  const activeClass = 'text-[var(--policiesAndProcedures-primary)] font-medium bg-[#F5F9EB]';
-  const inactiveClass = 'text-[#6B7280] hover:text-[var(--policiesAndProcedures-primary)] hover:bg-[#F5F9EB]/50';
+  const tabsActiveClass = 'text-[#6DA017] font-medium bg-[#6DA0171A]';
+  const tabsInactiveClass = 'text-[#6B7280] hover:text-[#6DA017] hover:bg-[#6DA0171A]';
 
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 h-[45px]">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
               className={cn(
-                'text-sm px-4 py-2 rounded-md transition-colors outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
-                isArticles ? activeClass : inactiveClass
+                'h-[45px] min-w-[125px] px-3 py-3 rounded-[4px] text-[14px] leading-[1.5] transition-colors outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
+                isMasterArticlesActive ? tabsActiveClass : tabsInactiveClass
               )}
             >
-              Articles
+              Master Articles
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-[200px]">
             <DropdownMenuItem asChild>
               <Link href="/policies/articles" className={cn('text-sm cursor-pointer w-full', pathname === '/policies/articles' && 'text-[var(--policiesAndProcedures-primary)] font-medium')}>
-                All Articles
+                Active Articles
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
@@ -189,15 +196,25 @@ function PoliciesTabs({ pathname }: { pathname: string }) {
           </DropdownMenuContent>
         </DropdownMenu>
 
+        <Link
+          href="/policies/articles/company"
+          className={cn(
+            'h-[45px] min-w-[126px] px-3 py-3 rounded-[4px] text-[14px] font-normal leading-[1.5] flex items-center transition-colors',
+            isCopiedArticles ? tabsActiveClass : tabsInactiveClass
+          )}
+        >
+          Copied Articles
+        </Link>
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button
               className={cn(
-                'text-sm px-4 py-2 rounded-md transition-colors outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
-                isCategories ? activeClass : inactiveClass
+                'h-[45px] min-w-[125px] px-3 py-3 rounded-[4px] text-[14px] leading-[1.5] transition-colors outline-none ring-0 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
+                isCategories ? tabsActiveClass : tabsInactiveClass
               )}
             >
-              Categories
+              Master Categories
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-[180px]">
@@ -214,17 +231,8 @@ function PoliciesTabs({ pathname }: { pathname: string }) {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Link
-          href="/policies/settings"
-          className={cn(
-            'text-sm px-4 py-2 rounded-md transition-colors',
-            isSettings ? activeClass : inactiveClass
-          )}
-        >
-          Settings
-        </Link>
       </div>
-      <div className="hidden md:flex items-center gap-2">
+      <div className="hidden items-center gap-2">
         <span className="text-sm text-[#6B7280]">View Policies & Procedures</span>
         <Switch
           checked={isViewPage}
@@ -250,7 +258,10 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const id = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(id);
+  }, []);
 
   const moduleConfig = getModuleConfig(pathname);
   const breadcrumb = getBreadcrumb(pathname);
@@ -278,10 +289,10 @@ export default function DashboardLayout({
       <aside
         className={cn(
           'hidden md:block shrink-0 bg-white relative transition-all duration-300 ease-in-out overflow-hidden',
-          sidebarCollapsed ? 'md:w-0' : 'md:w-[270px]'
+          sidebarCollapsed ? 'md:w-0' : 'md:w-[271px]'
         )}
       >
-        <div className="w-[270px] h-full">
+        <div className="w-[271px] h-full">
           <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed((prev) => !prev)} />
         </div>
       </aside>
@@ -298,30 +309,33 @@ export default function DashboardLayout({
       )}
 
       <main className="flex-1 min-w-0 flex flex-col">
-        {/* Header */}
-        <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-gray-200">
-          <div className="flex items-center gap-2 text-sm text-[#6B7280]">
-            <span className={cn('w-5 h-5 rounded-full flex items-center justify-center text-white', moduleConfig.iconBg)}>
-              {moduleConfig.icon}
-            </span>
-            <span className="text-[#374151] font-medium">{moduleConfig.name}</span>
-            <span className="hidden md:contents">
+        {/* Navbar — h-68, rounded-t 4px, border-b 1px, py-4 px-6; breadcrumb gap-2 h-9; icon 36px circle p-2, 20px icon; name font-semibold text-sm leading-[150%]; caret ~10px; crumb text regular 14px */}
+        <div className="flex items-center justify-between min-h-[68px] h-[68px] px-6 py-4 border-b border-gray-200 rounded-tl-[4px] rounded-tr-[4px]">
+          <div className="flex items-center gap-2 h-9 text-sm">
+            <div className="flex items-center gap-2 h-9 shrink-0">
+              <span className={cn('w-9 h-9 rounded-full flex items-center justify-center shrink-0 p-2', moduleConfig.iconBg)}>
+                {moduleConfig.icon}
+              </span>
+              <span className="font-semibold text-[14px] leading-[1.5] text-[#374151]">{moduleConfig.name}</span>
+            </div>
+            <span className="hidden md:flex items-center gap-2 h-9 text-[#6B7280]">
               {breadcrumb.map((crumb, i) => (
                 <React.Fragment key={i}>
-                  <ChevronRight size={14} className="text-gray-400" />
-                  <span>{crumb}</span>
+                  <ChevronRight size={15} className="text-[#000000] shrink-0" />
+                  <span className="font-normal text-[14px] leading-[1.5]">{crumb}</span>
                 </React.Fragment>
               ))}
             </span>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="w-8 h-8 flex items-center justify-center rounded-md text-gray-500 hover:bg-gray-100 transition-colors">
-              <Grid3X3 size={18} />
+          <div className="flex items-center gap-[10px]">
+            <button className="w-[30px] h-[30px] p-[6px] flex items-center justify-center rounded-md text-[#6D28D9] hover:bg-gray-100 transition-colors shrink-0" aria-label="Book">
+              <Image src="/icons/book.png" alt="" width={18} height={18} className="object-contain w-[18px] h-[18px]" style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(5000%) hue-rotate(250deg)' }} />
             </button>
-            <button className="w-8 h-8 flex items-center justify-center rounded-md text-gray-500 hover:bg-gray-100 transition-colors">
-              <HelpCircle size={18} />
+            <button className="w-[30px] h-[30px] p-[6px] flex items-center justify-center rounded-md text-[#6D28D9] hover:bg-gray-100 transition-colors shrink-0" aria-label="Help">
+              <Image src="/icons/question-mark.png" alt="" width={18} height={18} className="object-contain w-[18px] h-[18px]" style={{ filter: 'brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(5000%) hue-rotate(250deg)' }} />
             </button>
-            <div className="w-8 h-8 rounded-full bg-[#6D28D9] text-white text-xs font-semibold flex items-center justify-center">
+            <div className="w-px h-5 bg-[#E5E7EB] shrink-0" aria-hidden />
+            <div className="w-8 h-8 rounded-full bg-[#D1D5DB] text-[#374151] text-[14px] font-normal leading-[1] flex items-center justify-center shrink-0 p-2">
               GT
             </div>
           </div>
@@ -332,7 +346,7 @@ export default function DashboardLayout({
           {mounted ? (
             <>
               {showTabs && (
-                <div className="px-4 md:px-6 py-3 border-b border-gray-200">
+                <div className="min-h-[69px] flex flex-col justify-center gap-2 px-4 py-3 border-b border-gray-200 rounded-tl-[4px] rounded-tr-[4px]">
                   {isPolicies ? (
                     <PoliciesTabs pathname={pathname} />
                   ) : (

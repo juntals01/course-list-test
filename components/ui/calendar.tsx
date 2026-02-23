@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 
 // Move component definitions to top level
-const CalendarRoot = ({ className, rootRef, ...props }: any) => {
+const CalendarRoot = ({ className, rootRef, ...props }: React.ComponentPropsWithoutRef<'div'> & { rootRef?: React.Ref<HTMLDivElement> }) => {
   return (
     <div
       data-slot="calendar"
@@ -24,7 +24,7 @@ const CalendarRoot = ({ className, rootRef, ...props }: any) => {
   );
 };
 
-const CalendarChevron = ({ className, orientation, ...props }: any) => {
+const CalendarChevron = ({ className, orientation, ...props }: React.ComponentPropsWithoutRef<'svg'> & { orientation?: string }) => {
   if (orientation === 'left') {
     return <ChevronLeftIcon className={cn('size-4', className)} {...props} />;
   }
@@ -36,7 +36,7 @@ const CalendarChevron = ({ className, orientation, ...props }: any) => {
   return <ChevronDownIcon className={cn('size-4', className)} {...props} />;
 };
 
-const CalendarWeekNumber = ({ children, ...props }: any) => {
+const CalendarWeekNumber = ({ children, ...props }: React.ComponentPropsWithoutRef<'td'>) => {
   return (
     <td {...props}>
       <div className="flex size-(--cell-size) items-center justify-center text-center">

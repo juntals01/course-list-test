@@ -22,27 +22,27 @@ const CustomErrorCard = ({
   useEffect(() => {
     const checkTruncation = () => {
       const element = textRef.current;
-      if (element) {
-        // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
-        setIsTruncated(element.scrollHeight > element.clientHeight);
-      }
+      if (element) setIsTruncated(element.scrollHeight > element.clientHeight);
     };
-
-    checkTruncation();
+    const id = setTimeout(() => checkTruncation(), 0);
     window.addEventListener('resize', checkTruncation);
-    return () => window.removeEventListener('resize', checkTruncation);
+    return () => {
+      clearTimeout(id);
+      window.removeEventListener('resize', checkTruncation);
+    };
   }, [errorMessage]);
 
   useEffect(() => {
     if (!errorMessage) return;
-    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
-    setIsVisible(true); // Reset visibility when error message changes
+    const id = setTimeout(() => setIsVisible(true), 0);
     const timer = setTimeout(() => {
       setIsVisible(false);
       onErrorMessageChange?.(null);
     }, DEFAULT_VISIBLE_TIME);
-
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(id);
+      clearTimeout(timer);
+    };
   }, [errorMessage, onErrorMessageChange]);
 
   if (!isVisible) {
@@ -101,27 +101,27 @@ export const CustomErrorCardNoBorder = (
   useEffect(() => {
     const checkTruncation = () => {
       const element = textRef.current;
-      if (element) {
-        // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
-        setIsTruncated(element.scrollHeight > element.clientHeight);
-      }
+      if (element) setIsTruncated(element.scrollHeight > element.clientHeight);
     };
-
-    checkTruncation();
+    const id = setTimeout(() => checkTruncation(), 0);
     window.addEventListener('resize', checkTruncation);
-    return () => window.removeEventListener('resize', checkTruncation);
+    return () => {
+      clearTimeout(id);
+      window.removeEventListener('resize', checkTruncation);
+    };
   }, [errorMessage]);
 
   useEffect(() => {
     if (!errorMessage) return;
-    // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
-    setIsVisible(true); // Reset visibility when error message changes
+    const id = setTimeout(() => setIsVisible(true), 0);
     const timer = setTimeout(() => {
       setIsVisible(false);
       onErrorMessageChange?.(null);
     }, DEFAULT_VISIBLE_TIME);
-
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(id);
+      clearTimeout(timer);
+    };
   }, [errorMessage, onErrorMessageChange]);
 
   if (!isVisible) {

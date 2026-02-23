@@ -64,26 +64,36 @@ export function TablePagination<TData>({
   };
 
   const pageItems = getPageNumbers();
+  const isPolicies = app === APPS.POLICIES_AND_PROCEDURES;
+  const containerClass = isPolicies
+    ? 'flex items-center justify-center gap-2.5 p-2.5 w-[348px] h-[61px] mx-auto'
+    : 'flex items-center justify-center space-x-1 py-4 text-sm';
+  const labelClass = isPolicies
+    ? 'font-[var(--font-inter)] font-normal text-[14px] leading-[1.5] tracking-[0%] text-[#6DA017]'
+    : '';
 
   return (
-    <div className="flex items-center justify-center space-x-1 py-4 text-sm">
+    <div className={containerClass}>
       <Button
         variant="ghost"
         size="sm"
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
         aria-label="Go to previous page"
-        className={cn(theme.button.ghost, 'gap-1')}
+        className={cn(theme.button.ghost, 'gap-1', labelClass, isPolicies && 'text-[14px] font-[var(--font-inter)]')}
       >
         <ChevronLeft size={14} />
         Previous
       </Button>
 
-      <div className="flex items-center gap-0.5">
+      <div className={cn('flex items-center', isPolicies ? 'gap-1' : 'gap-0.5')}>
         {pageItems.map((pageNumber, idx) => {
           if (pageNumber === '...') {
             return (
-              <span key={`ellipsis-${idx}`} className="px-2 text-gray-400">
+              <span
+                key={`ellipsis-${idx}`}
+                className={cn('px-2', isPolicies ? 'text-[#6DA017]' : 'text-gray-400')}
+              >
                 ...
               </span>
             );
@@ -99,6 +109,7 @@ export function TablePagination<TData>({
               className={cn(
                 'w-8 h-8 p-0',
                 theme.button.ghost,
+                labelClass,
                 isCurrentPage &&
                   `pointer-events-none font-bold ${theme.button.secondary}`
               )}
@@ -118,7 +129,7 @@ export function TablePagination<TData>({
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
         aria-label="Go to next page"
-        className={cn(theme.button.ghost, 'gap-1')}
+        className={cn(theme.button.ghost, 'gap-1', labelClass, isPolicies && 'text-[14px] font-[var(--font-inter)]')}
       >
         Next
         <ChevronRight size={14} />

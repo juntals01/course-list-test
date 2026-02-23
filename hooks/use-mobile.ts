@@ -9,8 +9,11 @@ export function useIsMobile() {
     const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);
     const onChange = () => setIsMobile(mql.matches);
     mql.addEventListener('change', onChange);
-    setIsMobile(mql.matches);
-    return () => mql.removeEventListener('change', onChange);
+    const id = setTimeout(() => setIsMobile(mql.matches), 0);
+    return () => {
+      clearTimeout(id);
+      mql.removeEventListener('change', onChange);
+    };
   }, []);
 
   return isMobile;

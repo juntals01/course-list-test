@@ -75,7 +75,7 @@ const CustomInputSiteBox = <TFieldValues extends FieldValues = FieldValues>({
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     if (rhfRegisteredProps.onChange) {
-      rhfRegisteredProps.onChange(event as any);
+      rhfRegisteredProps.onChange(event as React.ChangeEvent<HTMLInputElement>);
     }
     if (onValueChange) {
       onValueChange(event.target.value);
@@ -93,7 +93,7 @@ const CustomInputSiteBox = <TFieldValues extends FieldValues = FieldValues>({
       restOfInputProps.onKeyDown &&
       typeof restOfInputProps.onKeyDown === 'function'
     ) {
-      restOfInputProps.onKeyDown(event as any);
+      restOfInputProps.onKeyDown(event as React.KeyboardEvent<HTMLInputElement>);
     }
   };
 
@@ -123,7 +123,7 @@ const CustomInputSiteBox = <TFieldValues extends FieldValues = FieldValues>({
 
   // Only add the `value` prop if this is a controlled component (not using RHF)
   if (onValueChange) {
-    (commonProps as any).value = controlledValue ?? '';
+    (commonProps as typeof commonProps & { value: string }).value = controlledValue ?? '';
   }
 
   return (

@@ -160,31 +160,33 @@ export default function SiteArticlesPage() {
 
   return (
     <>
-      {/* Filter + Search row */}
-      <div className="px-4 md:px-6 py-3 border-b border-gray-200">
-        <div className="flex items-center gap-3 md:gap-5">
+      {/* Filter container — h-73, rounded-t 4px, border-b 1px #E5E7EB, py-4 px-6, gap-4 */}
+      <div className="w-full min-h-[73px] flex flex-col justify-center py-4 px-6 border-b border-[#E5E7EB] rounded-tl-[4px] rounded-tr-[4px]">
+        <div className="flex items-center gap-4 w-full">
           <FiltersPopover app={APPS.POLICIES_AND_PROCEDURES} />
           <div
             className={cn(
-              'relative flex-1 rounded-md border border-[var(--table-border)] transition-all duration-200 ease-in-out',
+              'relative flex-1 min-w-0 w-full rounded-md border border-[#E5E7EB] box-border transition-all duration-200 ease-in-out flex items-center overflow-hidden',
               Glowing(APPS.POLICIES_AND_PROCEDURES).inputBox
             )}
+            style={{ height: 37 }}
           >
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              <SearchIcon size={14} />
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF] pointer-events-none">
+              <SearchIcon size={16} />
             </div>
             <Input
               placeholder="Search Article"
               value={globalFilter}
               onChange={(e) => setGlobalFilter(e.target.value)}
-              className="bg-white placeholder:text-gray-400 placeholder:text-sm border-none h-[36px] text-sm pl-9 shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="bg-white placeholder:text-[#9CA3AF] border-none h-full min-h-0 text-[14px] font-normal leading-[1.5] pl-9 pr-3 shadow-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 rounded-md"
             />
           </div>
         </div>
       </div>
 
-      {/* Content area */}
-      <div className="flex-1 px-4 md:px-6 py-4 bg-[#F3F4F6]">
+      {/* Content area — pt-10 (40px) gap at top, px-10 on desktop */}
+      <div className="flex-1 flex flex-col gap-6 overflow-auto bg-[#F3F4F6]">
+        <div className="flex flex-col gap-3 pt-10 px-4 md:px-10">
         <PageInfoBanner
           title="Site Articles"
           subtitle="List of site articles within your company."
@@ -259,14 +261,14 @@ export default function SiteArticlesPage() {
             isLoading={false}
             noResultsMessage="No site articles found."
             skeletonRows={pagination.pageSize}
-            containerClassName="border border-[var(--table-border)] rounded-md overflow-auto"
-            headerRowClassName="bg-[#EAECEF] border-b border-gray-300"
-            headerCellClassName="text-sm font-semibold text-[#374151] bg-[#EAECEF] border-r border-gray-300 last:border-r-0 px-4 py-2.5 [&:has([role=checkbox])]:!px-0 [&>[role=checkbox]]:!translate-y-0"
-            bodyRowClassName="text-sm group transition-colors hover:bg-[#F5F9EB] hover:[&_td]:text-[var(--policiesAndProcedures-primary)] hover:shadow-[inset_3px_0_0_var(--policiesAndProcedures-primary)]"
-            bodyCellClassName="px-4 py-3 text-sm text-[#4B5563] border-r border-gray-200 last:border-r-0 border-b border-gray-100 [&:has([role=checkbox])]:!px-0 [&>[role=checkbox]]:!translate-y-0"
+            containerClassName="border border-[#D1D5DB] rounded-lg overflow-auto min-h-[600px]"
+            headerRowClassName="bg-[#E5E7EB] border-b border-[#D1D5DB] h-[60px]"
+            headerCellClassName="text-sm font-semibold text-[#374151] bg-[#E5E7EB] border-r border-[#D1D5DB] last:border-r-0 py-3 px-4 [&:has([role=checkbox])]:!p-0 [&>[role=checkbox]]:!translate-y-0 [&_.size-5]:rounded-[4px]"
+            bodyRowClassName="text-sm group transition-colors h-[54px] border-b border-[#D1D5DB] hover:bg-[#f0f6e8] hover:[&_td]:text-[#6DA017]"
+            bodyCellClassName="py-3 px-4 font-[var(--font-inter)] text-[14px] font-normal leading-[1.5] tracking-[0%] text-[#374151] border-r border-[#D1D5DB] last:border-r-0 group-hover:text-[#6DA017] group-hover:[&_*]:!text-[#6DA017] [&:has([role=checkbox])]:!p-0 [&>[role=checkbox]]:!translate-y-0"
             tableMinWidth="900px"
-            tableHeaderHeight="h-[44px]"
-            tableRowHeight="h-[52px]"
+            tableHeaderHeight="h-[60px]"
+            tableRowHeight="h-[54px]"
           />
         </div>
 
@@ -303,9 +305,10 @@ export default function SiteArticlesPage() {
           })}
         </div>
 
-        {table.getPageCount() > 1 && (
-          <TablePagination table={table} app={APPS.POLICIES_AND_PROCEDURES} />
-        )}
+          {table.getPageCount() > 1 && (
+            <TablePagination table={table} app={APPS.POLICIES_AND_PROCEDURES} />
+          )}
+        </div>
       </div>
     </>
   );

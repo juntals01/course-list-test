@@ -2,34 +2,22 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Input } from '@/components/ui/input';
-import {
-  Search,
-  LayoutDashboard,
-  BarChart3,
-  Building2,
-  Users,
-  CreditCard,
-  FileText,
-  ClipboardList,
-  ShieldCheck,
-  GraduationCap,
-  AlertTriangle,
-  HardHat,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
 
 type NavItem = {
   label: string;
-  icon: React.ReactNode;
+  icon: string;
 };
 
 type AppItem = {
   label: string;
-  icon: React.ReactNode;
+  icon: string;
   color: string;
+  /** Light/pastel background for the icon circle (matches reference design) */
+  iconBg: string;
   href?: string;
   activePrefix?: string;
   activeHighlight?: string;
@@ -37,21 +25,21 @@ type AppItem = {
 };
 
 const portalNavItems: NavItem[] = [
-  { label: 'Dashboard', icon: <LayoutDashboard size={16} /> },
-  { label: 'Reports', icon: <BarChart3 size={16} /> },
-  { label: 'Company Management', icon: <Building2 size={16} /> },
-  { label: 'User Management', icon: <Users size={16} /> },
-  { label: 'Billing', icon: <CreditCard size={16} /> },
+  { label: 'Dashboard', icon: '/icons/dashboard.png' },
+  { label: 'Reports', icon: '/icons/reports.png' },
+  { label: 'Company Management', icon: '/icons/company.png' },
+  { label: 'User Management', icon: '/icons/users.png' },
+  { label: 'Billing', icon: '/icons/billing.png' },
 ];
 
-/* Figma icon spec: w:28 h:28 border-radius:99 padding:4px → 20px inner icon area → icon size 16px */
+/* Icon circles use light/pastel backgrounds; color is used for accent (left border, active state) */
 const appItems: AppItem[] = [
-  { label: 'Policies and Procedures', icon: <FileText size={16} />, color: '#6da017', href: '/policies/articles', activePrefix: '/policies', activeHighlight: '#F5F9EB', activeTextColor: 'var(--policiesAndProcedures-primary)' },
-  { label: 'Forms', icon: <ClipboardList size={16} />, color: '#08a273' },
-  { label: 'Inspections', icon: <ShieldCheck size={16} />, color: '#337cf3' },
-  { label: 'Training', icon: <GraduationCap size={16} />, color: '#FEB836', href: '/training/courses', activePrefix: '/training', activeHighlight: '#FFF8F0', activeTextColor: 'var(--training-primary)' },
-  { label: 'Hazards', icon: <AlertTriangle size={16} />, color: '#EF4444' },
-  { label: 'Contractors', icon: <HardHat size={16} />, color: '#F97316' },
+  { label: 'Policies and Procedures', icon: '/icons/policies-sidebar.png', color: '#6da017', iconBg: '#E0F0D4', href: '/policies/articles', activePrefix: '/policies', activeHighlight: '#F5F9EB', activeTextColor: 'var(--policiesAndProcedures-primary)' },
+  { label: 'Forms', icon: '/icons/forms.png', color: '#08a273', iconBg: '#D1F0E8' },
+  { label: 'Inspections', icon: '/icons/inspection.png', color: '#337cf3', iconBg: '#D4E3FC' },
+  { label: 'Training', icon: '/icons/training.png', color: '#FEB836', iconBg: '#FFF0D6', href: '/training/courses', activePrefix: '/training', activeHighlight: '#FFF8F0', activeTextColor: 'var(--training-primary)' },
+  { label: 'Hazards', icon: '/icons/hazards.png', color: '#EF4444', iconBg: '#FDE2E2' },
+  { label: 'Contractors', icon: '/icons/contractors.png', color: '#F97316', iconBg: '#FFEDD5' },
 ];
 
 type SidebarProps = {
@@ -65,16 +53,16 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
   return (
     <div className="relative flex flex-col h-full border-r border-gray-200">
       {/* Top section: Logo + Search + Portal Management */}
-      <div className="flex flex-col pt-4 pb-3 gap-4 border-b border-gray-200">
-        {/* Logo */}
+      <div className="flex flex-col pt-3 pb-3 gap-4 border-b border-gray-200">
+        {/* Logo — dimensions match source (114×64) to avoid blur from wrong aspect ratio; use 2x asset for retina */}
         <div className="px-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo.png"
+          <Image
+            src="/logo2.png"
             alt="Your Safety Partners"
-            width={110}
-            height={44}
+            width={114}
+            height={64}
             className="object-contain"
+            priority
           />
         </div>
 
@@ -89,19 +77,19 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
           />
         </div>
 
-        {/* Portal Management */}
+        {/* Portal Management — icons from public/icons */}
         <div className="flex flex-col gap-1.5 pt-1">
           <p className="px-4 text-[11px] font-extrabold text-[#9CA3AF] uppercase leading-none tracking-wider">
             Portal Management
           </p>
-          <nav className="flex flex-col gap-0.5">
+          <nav className="flex flex-col gap-1">
             {portalNavItems.map((item) => (
               <button
                 key={item.label}
-                className="flex items-center gap-2.5 px-4 py-[6px] rounded-md text-[13px] font-normal leading-[1.5] text-[#4B5563] hover:bg-gray-100 transition-colors w-full text-left"
+                className="flex items-center gap-2.5 px-4 py-2.5 rounded-md text-[13px] font-normal leading-[1.5] text-[#4B5563] hover:bg-gray-100 transition-colors w-full text-left"
               >
-                <span className="w-4 h-4 flex items-center justify-center text-[#6B7280] shrink-0">
-                  {item.icon}
+                <span className="w-4 h-4 flex items-center justify-center shrink-0">
+                  <Image src={item.icon} alt="" width={16} height={16} className="object-contain" />
                 </span>
                 <span>{item.label}</span>
               </button>
@@ -127,10 +115,10 @@ export default function Sidebar({ collapsed = false, onToggle }: SidebarProps) {
             const content = (
               <>
                 <span
-                  className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-white p-1"
-                  style={{ backgroundColor: item.color }}
+                  className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center p-1"
+                  style={{ backgroundColor: item.iconBg }}
                 >
-                  {item.icon}
+                  <Image src={item.icon} alt="" width={16} height={16} className="object-contain" />
                 </span>
                 <span>{item.label}</span>
               </>

@@ -95,7 +95,7 @@ const CustomInput = <TFieldValues extends FieldValues = FieldValues>({
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     if (rhfRegisteredProps.onChange) {
-      rhfRegisteredProps.onChange(event as any);
+      rhfRegisteredProps.onChange(event as React.ChangeEvent<HTMLInputElement>);
     }
     if (onValueChange) {
       onValueChange(event.target.value);
@@ -113,7 +113,7 @@ const CustomInput = <TFieldValues extends FieldValues = FieldValues>({
       restOfInputProps.onKeyDown &&
       typeof restOfInputProps.onKeyDown === 'function'
     ) {
-      restOfInputProps.onKeyDown(event as any);
+      restOfInputProps.onKeyDown(event as React.KeyboardEvent<HTMLInputElement>);
     }
   };
 
@@ -143,7 +143,7 @@ const CustomInput = <TFieldValues extends FieldValues = FieldValues>({
   };
 
   if (onValueChange) {
-    (commonProps as any).value = controlledValue ?? '';
+    (commonProps as React.ComponentProps<typeof ShadcnInput> & { value?: string }).value = controlledValue ?? '';
   }
 
   const renderInput = () => (

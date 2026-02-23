@@ -151,8 +151,9 @@ export default function CoursesPage() {
         </div>
       </div>
 
-      {/* Content area */}
-      <div className="flex-1 px-4 md:px-6 py-4 bg-[#F3F4F6]">
+      {/* Content area — pt-10 (40px) gap at top, px-10 on desktop */}
+      <div className="flex-1 flex flex-col gap-6 overflow-auto bg-[#F3F4F6]">
+        <div className="flex flex-col gap-3 pt-10 px-4 md:px-10">
         <PageInfoBanner
           title="Free Courses List"
           subtitle="List of free courses available on the platform."
@@ -283,9 +284,10 @@ export default function CoursesPage() {
           })}
         </div>
 
-        {table.getPageCount() > 1 && (
-          <TablePagination table={table} app={APPS.TRAINING} />
-        )}
+          {table.getPageCount() > 1 && (
+            <TablePagination table={table} app={APPS.TRAINING} />
+          )}
+        </div>
       </div>
 
       {/* Dialogs */}

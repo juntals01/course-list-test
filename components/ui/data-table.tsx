@@ -32,7 +32,7 @@ const DEFAULT_FILTER_FIELDS: string[] = [];
 
 export type CustomTablePropsType<TData> = React.PropsWithChildren<{
   row: Row<TData>;
-}> & { [x: string]: any };
+}> & { [x: string]: unknown };
 
 type DataTableProps<TData> = {
   columns: ColumnDef<TData, unknown>[];

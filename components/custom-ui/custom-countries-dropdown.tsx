@@ -45,10 +45,12 @@ const customCountriesDropdownItems: CustomCountriesDropdownItem[] =
     flag: country.flag,
   }));
 
+type CountryOption = { code: string; name: string };
+
 type CustomCountriesDropdownProps = {
   app?: APPS | null;
   label?: string;
-  countries?: any[];
+  countries?: CountryOption[];
   selectedItemValue: CustomCountriesDropdownItem | null;
   hasValidationError?: boolean;
   validationError?: string;
